@@ -30,3 +30,7 @@
 # Documentation
 documentation/CodeReference
 documentation/doxygen-warnings.log
+
+#Visual Studio files
+build/*.*
+
