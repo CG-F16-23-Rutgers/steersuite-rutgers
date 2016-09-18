@@ -159,21 +159,25 @@ bool Curve::findTimeInterval(unsigned int& nextPoint, float time)
 {
 	//Need iterator here
 	std::vector<CurvePoint>::iterator pointIterator;
+
 	//vector element counter
 	int i = 0;
-	//DEBUG std::cout << "Entering the findTimeInterval() function" << "; Time is: " << time << std::endl;
+	//DEBUG std::cout << std::endl;bstd::cout << "Entering the findTimeInterval() function" << "; Time is: " << time << std::endl;
 
 	//Iterate over the controlPoints vector to locate item with time
 	for (pointIterator = controlPoints.begin(); pointIterator < controlPoints.end(); pointIterator++, i++) {
 		//What if there are duplicate items with the same value of time? 
-		if (pointIterator[i].time = time)
-			//returnint the index of the next point on the curve
-			nextPoint = i;
-		else
-			//no matching time was found
-			return false;
+		//DEBUG std::cout << "probing point index: " << i << " with properties: " << controlPoints[i].time << std::endl;
+		
+		if (controlPoints[i].time < time && time < controlPoints[i+1].time)  {
+			//returning the index of the next point on the curve
+			//DEBUG std::cout << "Index of the next point on the curve is: " << i+1 << std::endl;
+			nextPoint = i+1;
+			return true;
+		}
+		
 	}
-	return true;
+	return false; //error locating the point
 }
 
 
@@ -182,6 +186,23 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 {
 	Point newPosition;
 	float normalTime, intervalTime;
+	//DEBUG  
+	std::cout << std::endl; std::cout << "Entering the useHermiteCurve() function" << "; Time is: " << time << std::endl;
+	//DEBUG  
+	std::cout << "next point index: " << nextPoint << " ; Time: " << time << std::endl;
+
+	//find previous point
+	//normalize time
+	intervalTime = controlPoints[nextPoint].time - controlPoints[nextPoint - 1].time;
+	//DEBUG 
+	std::cout << "Time interval: " << intervalTime << std::endl;
+
+	normalTime = (time - controlPoints[nextPoint - 1].time) / intervalTime;
+	//DEBUG 
+	std::cout << "Normal time : " << normalTime << std::endl;
+
+	//calculate newPosition
+	//returm newPosition
 
 	//================DELETE THIS PART AND THEN START CODING===================
 	static bool flag = false;
