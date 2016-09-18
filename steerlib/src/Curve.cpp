@@ -57,7 +57,7 @@ void Curve::drawCurve(Color curveColor, float curveThickness, int window)
 	// Robustness: make sure there is at least two control point: start and end points
 	// Move on the curve from t=0 to t=finalPoint, using window as step size, and linearly interpolate the curve points
 	// Note that you must draw the whole curve at each frame, that means connecting line segments between each two points on the curve
-	
+
 	return;
 #endif
 }
@@ -65,27 +65,31 @@ void Curve::drawCurve(Color curveColor, float curveThickness, int window)
 // Sort controlPoints vector in ascending order: min-first
 void Curve::sortControlPoints()
 {
+	struct timeCompare {
+		bool operator()(const CurvePoint& p1, const CurvePoint& p2) const {
+			return p1.time < p2.time;
+		}
+	};
 	//debug print
-	/*
+	//DEBUG
 	std::cout << "Print controlPoints elements before sorting" << std::endl;
 	for (int y = 0; y < controlPoints.size(); y++)
 	{
 		std::cout << "ControlPoint index: " << y << ";ControlPoint time value: " << controlPoints[y].time << std::endl;
 	}
-	*/
+
 
 	//Inline sorting of the controlPoints vector on time property
 	std::sort(controlPoints.begin(), controlPoints.end(), timeCompare());
 
-	
 	//Post order check
-	/*
+	//DEBUG 
 	std::cout << "Print controlPoints elements post sorting" << std::endl;
 	for (int y = 0; y < controlPoints.size(); y++)
 	{
+		//DEBUG
 		std::cout << "ControlPoint index: " << y << ";ControlPoint time value: " << controlPoints[y].time << std::endl;
 	}
-	*/
 
 	return;
 }
@@ -123,15 +127,29 @@ bool Curve::calculatePoint(Point& outputPoint, float time)
 // Check Roboustness
 bool Curve::checkRobust()
 {
-	//================DELETE THIS PART AND THEN START CODING===================
-	static bool flag = false;
-	if (!flag)
-	{
-		std::cerr << "ERROR>>>>Member function checkRobust is not implemented!" << std::endl;
-		flag = true;
-	}
-	//=========================================================================
+	//verity that the curve has at least 2 points
+	float lastTime = 0;
+	if (controlPoints.size() <= 2) {
+		std::cerr << "ERROR>>>>Less than two control points in the curve!" << std::endl;
 
+		return false;
+	}
+	//verify no two consecutive points with same time - remming for now even though it is a problem
+	//or is it OK?
+	//disabling the check below as per Fernando's post on the class forums
+	//https://sakai.rutgers.edu/portal/site/405ae60f-b8c0-4d79-9972-ccc1d3789bdf/tool/2969585d-e153-4db7-b1c1-89624feb4591/discussionForum/message/dfViewThread
+
+	/*
+	for (int i = 0; i < controlPoints.size(); i++) {
+		//DEBUG std::cout << "ControlPoint index: " << i << ";ControlPoint time value: " << controlPoints[i].time << std::endl;
+		if (controlPoints[i].time = lastTime) {
+			std::cerr << "ERROR>>>>Two points with same time on the controlPoints vector! " << i << " " << controlPoints[i].time << " "
+				<< lastTime << std::endl;
+			return false;
+		}
+		lastTime = controlPoints[i].time;
+	}
+	*/
 
 	return true;
 }
@@ -139,18 +157,25 @@ bool Curve::checkRobust()
 // Find the current time interval (i.e. index of the next control point to follow according to current time)
 bool Curve::findTimeInterval(unsigned int& nextPoint, float time)
 {
-	//================DELETE THIS PART AND THEN START CODING===================
-	static bool flag = false;
-	if (!flag)
-	{
-		std::cerr << "ERROR>>>>Member function findTimeInterval is not implemented!" << std::endl;
-		flag = true;
+	//Need iterator here
+	std::vector<CurvePoint>::iterator pointIterator;
+	//vector element counter
+	int i = 0;
+	//DEBUG std::cout << "Entering the findTimeInterval() function" << "; Time is: " << time << std::endl;
+
+	//Iterate over the controlPoints vector to locate item with time
+	for (pointIterator = controlPoints.begin(); pointIterator < controlPoints.end(); pointIterator++, i++) {
+		//What if there are duplicate items with the same value of time? 
+		if (pointIterator[i].time = time)
+			//returnint the index of the next point on the curve
+			nextPoint = i;
+		else
+			//no matching time was found
+			return false;
 	}
-	//=========================================================================
-
-
 	return true;
 }
+
 
 // Implement Hermite curve
 Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
@@ -188,7 +213,7 @@ Point Curve::useCatmullCurve(const unsigned int nextPoint, const float time)
 	//=========================================================================
 
 	// Calculate position at t = time on Catmull-Rom curve
-	
+
 	// Return result
 	return newPosition;
 }

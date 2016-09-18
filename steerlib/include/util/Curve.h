@@ -42,11 +42,6 @@ namespace Util {
 		float time;
 	};
 
-	struct timeCompare {	
-		bool operator()(const CurvePoint& p1, const CurvePoint& p2) const {
-				return p1.time < p2.time;
-		}
-	};
 
  	/* Class for implementing an animation curve. From within any module, class or function, a Curve object can be created.
 	** Control points must be passed to this class as CurvePoint objects (one by one, or together in a vector).
