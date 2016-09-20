@@ -45,15 +45,38 @@ void Curve::drawCurve(Color curveColor, float curveThickness, int window)
 {
 #ifdef ENABLE_GUI
 
-	//================DELETE THIS PART AND THEN START CODING===================
-	static bool flag = false;
-	if (!flag)
-	{
-		std::cerr << "ERROR>>>>Member function drawCurve is not implemented!" << std::endl;
-		flag = true;
-	}
-	//=========================================================================
+	//DEBUG  
+	
+	//std::cout << std::endl; std::cout << "Entering the drawCurve() function" <<
+	//	"; Window: " << window << "Curve type: " << type << std::endl;
+	
+	Point firstPoint, secondPoint;
 
+	float startTime = controlPoints[0].time,
+		endTime = controlPoints[controlPoints.size() - 1].time;
+	int size = controlPoints.size();
+	int agentIndex = 0;
+	float fineWindow;
+	if (window = 5) 
+		fineWindow = 2;
+	else fineWindow = 2.5;
+
+	for (int timeCounter = startTime; timeCounter < endTime; timeCounter = timeCounter + fineWindow)
+	{
+		if (calculatePoint(firstPoint, timeCounter) &&
+			calculatePoint(secondPoint, timeCounter + fineWindow)) {
+			/*
+			std::cout << timeCounter << " - 1( " << firstPoint.x << "," << firstPoint.y << "," << firstPoint.z << ") ; 2( " <<
+				secondPoint.x << "," << secondPoint.y << "," << secondPoint.z << ")" << std::endl;
+			*/
+			DrawLib::drawLine(firstPoint, secondPoint, curveColor, curveThickness);
+			
+		}
+		else {
+			//return; 
+		} 
+	}
+	
 	// Robustness: make sure there is at least two control point: start and end points
 	// Move on the curve from t=0 to t=finalPoint, using window as step size, and linearly interpolate the curve points
 	// Note that you must draw the whole curve at each frame, that means connecting line segments between each two points on the curve
@@ -65,6 +88,10 @@ void Curve::drawCurve(Color curveColor, float curveThickness, int window)
 // Sort controlPoints vector in ascending order: min-first
 void Curve::sortControlPoints()
 {
+	//DEBUG  
+
+	//std::cout << std::endl; std::cout << "Entering the sortControlPoints() function" << std::endl;
+
 	struct timeCompare {
 		bool operator()(const CurvePoint& p1, const CurvePoint& p2) const {
 			return p1.time < p2.time;
@@ -97,6 +124,9 @@ void Curve::sortControlPoints()
 // Note that this function should return false if the end of the curve is reached, or no next point can be found
 bool Curve::calculatePoint(Point& outputPoint, float time)
 {
+	//DEBUG  
+	//std::cout << std::endl; std::cout << "Entering the calculatePoint() function" << std::endl;
+
 	// Robustness: make sure there is at least two control point: start and end points
 	if (!checkRobust())
 		return false;
@@ -125,13 +155,20 @@ bool Curve::calculatePoint(Point& outputPoint, float time)
 // Check Roboustness
 bool Curve::checkRobust()
 {
+	//DEBUG  
+	//std::cout << std::endl; std::cout << "Entering the checkRobust() function" << std::endl;
+
 	//verity that the curve has at least 2 points
 	float lastTime = 0;
 	if (controlPoints.size() <= 2) {
 		std::cerr << "ERROR>>>>Less than two control points in the curve!" << std::endl;
 
+		// those hard exits added to avoid draining resources 
+		//exit(0);
 		return false;
 	}
+	//check no to go over the time
+	
 	//verify no two consecutive points with same time - remming for now even though it is a problem
 	//or is it OK?
 	//disabling the check below as per Fernando's post on the class forums
@@ -143,31 +180,36 @@ bool Curve::checkRobust()
 // Find the current time interval (i.e. index of the next control point to follow according to current time)
 bool Curve::findTimeInterval(unsigned int& nextPoint, float time)
 {
+
 	//Need iterator here
 	std::vector<CurvePoint>::iterator pointIterator;
 
 	//vector element counter
 	int i = 0;
+	float maxtime = controlPoints.at(controlPoints.size()-1).time;
+	if (time > maxtime) {
+		return false;
+	}
+
 	//DEBUG 
-	std::cout << std::endl; std::cout << "Entering the findTimeInterval() function" << "; Time is: " << time << std::endl;
+	//std::cout << std::endl; std::cout << "Entering the findTimeInterval() function" << "; Time is: " << time << std::endl;
 
 	//Iterate over the controlPoints vector to locate item with time
 	for (pointIterator = controlPoints.begin(); pointIterator < controlPoints.end(); pointIterator++, i++) {
 		//What if there are duplicate items with the same value of time? 
-		//DEBUG 
-		std::cout << "probing point index: " << i << " with properties: " << controlPoints[i].time << std::endl;
+		//DEBUG std::cout << "probing point index: " << i << " with properties: " << controlPoints[i].time << std::endl;
 		
-		if (controlPoints[i].time < time && time < controlPoints[i+1].time)  {
+		if (controlPoints[i].time <= time && time <= controlPoints[i+1].time)  {
 			//returning the index of the next point on the curve
-			//DEBUG 
-			std::cout << "Index of the next point on the curve is: " << i+1 << std::endl;
+			//DEBUG std::cout << "Index of the next point on the curve is: " << i+1 << std::endl;
 			nextPoint = i+1;
 			return true;
 		}
 		
 	}
 	//DEBUG std::cout << std::endl; std::cout << "About to return false to caller" << std::endl;
-
+	// those hard exits added to avoid draining resources 
+	exit(0);
 	return false; //error locating the point
 }
 
@@ -177,9 +219,8 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 {
 	Point newPosition;
 	float normalTime, intervalTime;
-	//DEBUG  
-	std::cout << std::endl; std::cout << "Entering the useHermiteCurve() function" <<
-	"; Next point index: " << nextPoint << " ; Time: " << time << std::endl;
+	//DEBUG 
+	//std::cout << std::endl; std::cout << "Entering the useHermiteCurve() function" << "; Next point index: " << nextPoint << " ; Time: " << time << std::endl;
 
 	//find previous point
 	//normalize time
@@ -187,9 +228,10 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 
 	normalTime = (time - controlPoints[nextPoint - 1].time) / intervalTime;
 	//DEBUG 
-	std::cout << "Time interval: " << intervalTime << "; Normal time : " << normalTime << std::endl;
+	//std::cout << "Time interval: " << intervalTime << "; Normal time : " << normalTime << std::endl;
 	//DEBUG 
-	std::cout << "Pos-x,y,z Tg-x,y,z: "<< nextPoint-1 << "(" << controlPoints.at(nextPoint - 1).position.x << ","
+		
+		std::cout << "Pos-x,y,z Tg-x,y,z: "<< nextPoint-1 << "(" << controlPoints.at(nextPoint - 1).position.x << ","
 		<< controlPoints.at(nextPoint - 1).position.y << "," << controlPoints.at(nextPoint - 1).position.z << ","
 		<< controlPoints.at(nextPoint - 1).tangent.x << "," << controlPoints.at(nextPoint - 1).tangent.y << ","
 		<< controlPoints.at(nextPoint - 1).tangent.z  << ")"
@@ -198,9 +240,9 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 		<< controlPoints.at(nextPoint).position.y << "," << controlPoints.at(nextPoint).position.z << ","
 		<< controlPoints.at(nextPoint).tangent.x << "," << controlPoints.at(nextPoint).tangent.y << ","
 		<< controlPoints.at(nextPoint).tangent.z << ")" << std::endl;
+		
 
 	//calculate newPosition
-
 	newPosition.x =
 		(
 			(
@@ -218,7 +260,7 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 				+ normalTime
 			)
 			*
-			(controlPoints.at(nextPoint - 1).tangent.x)
+			((controlPoints.at(nextPoint - 1).tangent.x)*(intervalTime))
 		) +
 		(
 			(
@@ -234,44 +276,45 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 				- (pow(normalTime, 2))
 			)
 			*
-			(controlPoints.at(nextPoint).tangent.x)
+			((controlPoints.at(nextPoint).tangent.x)*(intervalTime))
 		);
 
 	newPosition.y =
 		(
-		(
-			(2 * pow(normalTime, 3))
-			- (3 * pow(normalTime, 2))
-			+ 1
+			(
+				(2 * pow(normalTime, 3))
+				- (3 * pow(normalTime, 2))
+				+ 1
 			)
 			*
 			(controlPoints.at(nextPoint - 1).position.y)
-			) +
+		) +
+		(
 			(
-		(
 				(pow(normalTime, 3))
-			- (2 * pow(normalTime, 2))
-			+ normalTime
+				- (2 * pow(normalTime, 2))
+				+ normalTime
 			)
-				*
-				(controlPoints.at(nextPoint - 1).tangent.y)
-				) +
-				(
+			*
+			((controlPoints.at(nextPoint - 1).tangent.y)*(intervalTime))
+		) +
 		(
-					(-2 * pow(normalTime, 3))
-			+ (3 * pow(normalTime, 2))
+			(
+				(-2 * pow(normalTime, 3))
+				+ (3 * pow(normalTime, 2))
 			)
-					*
-					(controlPoints.at(nextPoint).position.y)
-					) +
-					(
+			*
+			(controlPoints.at(nextPoint).position.y)
+		) +
 		(
-						(pow(normalTime, 3))
-			- (pow(normalTime, 2))
+			(
+				(pow(normalTime, 3))
+				- (pow(normalTime, 2))
 			)
-						*
-						(controlPoints.at(nextPoint).tangent.y)
-						);
+			*
+			((controlPoints.at(nextPoint).tangent.y)*(intervalTime))
+		);
+	
 	newPosition.z =
 		(
 		(
@@ -289,7 +332,7 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 			+ normalTime
 			)
 				*
-				(controlPoints.at(nextPoint - 1).tangent.z)
+				((controlPoints.at(nextPoint - 1).tangent.z)*(intervalTime))
 				) +
 				(
 		(
@@ -305,10 +348,10 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 			- (pow(normalTime, 2))
 			)
 						*
-						(controlPoints.at(nextPoint).tangent.z)
+						((controlPoints.at(nextPoint).tangent.z)*(intervalTime))
 						);
 	//DEBUG 
-		std::cout << "newPosition(" << newPosition.x << "," << newPosition.y << "," << newPosition.z << ")" << std::endl;
+	//std::cout << "newPosition(" << newPosition.x << "," << newPosition.y << "," << newPosition.z << ")" << std::endl;
 
 	// Calculate position at t = time on Hermite curve
 

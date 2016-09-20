@@ -12,12 +12,12 @@
     <version>1.0</version>
     <name>curve1</name>
     <worldBounds>
-      <xmin>-100</xmin>
-      <xmax>100</xmax>
+      <xmin>-500</xmin>
+      <xmax>500</xmax>
       <ymin>0</ymin>
       <ymax>0</ymax>
-      <zmin>-100</zmin>
-      <zmax>100</zmax>
+      <zmin>-500</zmin>
+      <zmax>500</zmax>
     </worldBounds>
   </header>
   
