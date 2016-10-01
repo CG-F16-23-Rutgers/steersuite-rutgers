@@ -129,8 +129,9 @@ namespace SteerLib
 		*  DO NOT MODIFY polygon1.xml
 		*/
 		static bool intersect(float& return_penetration_depth, Util::Vector& return_penetration_vector, const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB);
-
 	private:
+		static bool calculateAABB(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB);
+		static bool GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB, const std::vector<Util::Vector> _simplex);
 
 	}; // class GJK_EPA
 

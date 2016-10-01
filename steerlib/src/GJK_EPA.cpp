@@ -7,7 +7,7 @@ SteerLib::GJK_EPA::GJK_EPA()
 
 //Look at the GJK_EPA.h header file for documentation and instructions
 
-bool calculateAABB(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB) {
+bool SteerLib::GJK_EPA::calculateAABB(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB) {
 
 	//get shapeA
 	//get shapeB
@@ -98,22 +98,36 @@ bool calculateAABB(const std::vector<Util::Vector>& _shapeA, const std::vector<U
 	return true; //Polygons cannot intersect
 }
 
+bool SteerLib::GJK_EPA::GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
+	const std::vector<Util::Vector> _simplex) {
+
+
+
+	return true; //is_colliding
+}
 
 bool SteerLib::GJK_EPA::intersect(float& return_penetration_depth, Util::Vector& return_penetration_vector, 
 	const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB)
 {
-	if (!calculateAABB(_shapeA, _shapeB)) { //if AABB - returns false - skip those polygons
-		//std::cout << "Polygons cannot intersect - exiting this set .. " << std::endl;
-		return false;
-	}
-	else
-		return true;
-	//std::cout << "Those two polygons can intersect." << std::endl;
+	std::vector<Util::Vector> _simplex;
+	bool is_colliding = false;
 
 	//The caller sends permutation of all shapes 
 	//We are comparing only two
 	//Since we deal with vertices at this point
-	//load the 
+
+	if (!calculateAABB(_shapeA, _shapeB)) { //if AABB - returns false - skip those polygons
+		//DBG std::cout << "Polygons cannot intersect - exiting this set .. " << std::endl;
+		return false;
+	}
+	//if calculatwAABB return true
+	//will run the GJK algorithm on the polygons
+	else
+		is_colliding = GJK(_shapeA, _shapeB, _simplex);
+			
+		return true;
+	//DBG std::cout << "Those two polygons can intersect." << std::endl;
+
 
 
 
