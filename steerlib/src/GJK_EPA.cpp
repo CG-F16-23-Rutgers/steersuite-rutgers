@@ -1,4 +1,6 @@
 #include "obstacles/GJK_EPA.h"
+#include <algorithm>
+#include <vector>
 
 
 SteerLib::GJK_EPA::GJK_EPA()
@@ -14,8 +16,8 @@ bool SteerLib::GJK_EPA::calculateAABB(const std::vector<Util::Vector>& _shapeA, 
 	int counter = 0;
 	std::vector<Util::Vector> ShapeAPtr, ShapeBPtr;
 	ShapeAPtr = _shapeA;
-	int vectorASize = ShapeAPtr.capacity();
-	int vectorBSize = ShapeBPtr.capacity();
+	size_t vectorASize = ShapeAPtr.capacity();
+	size_t vectorBSize = ShapeBPtr.capacity();
 	Util::Point max, min;
 	max.x = -1E+37f; max.y = -1E+37f; max.z = -1E+37f;
 	min.x = 1E+37f; min.y = 1E+37f; min.z = 1E+37f;
@@ -98,39 +100,296 @@ bool SteerLib::GJK_EPA::calculateAABB(const std::vector<Util::Vector>& _shapeA, 
 	return true; //Polygons cannot intersect
 }
 
+Util::Vector SteerLib::GJK_EPA::polygonCenter(const std::vector<Util::Vector>& _shape) {
+	Util::Vector center;
+	float area = 0;
+	std::vector<Util::Vector> ShapePtr;
+	ShapePtr = _shape;
+	size_t vectorSize = ShapePtr.capacity();
+
+
+	for (int currIndex = 0; currIndex < vectorSize; currIndex++) {
+		int nextIndex = (currIndex + 1) % vectorSize;
+		area = area + ((ShapePtr.at(currIndex).x)*(ShapePtr.at(nextIndex).z) - (ShapePtr.at(nextIndex).x)*(ShapePtr.at(currIndex).z));
+	}
+	area = (.5f * area);
+	//DBG std::cout << "Area:" << area << std::endl;
+
+
+	for (int currIndex = 0; currIndex < vectorSize; currIndex++) {
+		int nextIndex = (currIndex + 1) % vectorSize;
+		center.x = center.x + ((ShapePtr.at(currIndex).x) + (ShapePtr.at(nextIndex).x))
+			*((ShapePtr.at(currIndex).x)*(ShapePtr.at(nextIndex).z) - (ShapePtr.at(nextIndex).x)*(ShapePtr.at(currIndex).z));
+		center.z = center.z + ((ShapePtr.at(currIndex).z) + (ShapePtr.at(nextIndex).z))
+			*((ShapePtr.at(currIndex).x)*(ShapePtr.at(nextIndex).z) - (ShapePtr.at(nextIndex).x)*(ShapePtr.at(currIndex).z));
+	}
+	center.x = center.x / (6 * area);
+	center.z = center.z / (6 * area);
+	//DBG std::cout << "Center:(" << center.x << ", " << center.z << ")"<< std::endl;
+	return center; //returns polygon center
+}
+
+Util::Vector SteerLib::GJK_EPA::support(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
+	Util::Vector& DVector) {
+	//Add a point to Minkowski Difference
+	Util::Vector MinkowskiDiff;
+	std::vector<Util::Vector> ShapeAPtr, ShapeBPtr;
+	Util::Vector	DVectorPtr, p1Simp, p2Simp;
+	ShapeAPtr = _shapeA;
+	ShapeBPtr = _shapeB;
+
+	//size_t vectorASize = ShapeAPtr.size();
+	//size_t vectorBSize = ShapeBPtr.size();
+
+	p1Simp = ShapeAPtr.at(0); //maxdot
+	p2Simp = ShapeBPtr.at(0);
+	/*
+	std::cout << "  support() - p1Simp :(" << p1Simp.x << ", " << p1Simp.z << ")" << std::endl;
+	std::cout << "  support() - p2Simp :(" << p2Simp.x << ", " << p2Simp.z << ")" << std::endl;
+	std::cout << "   support() - DVector (" << DVector.x << ", " << DVector.z << ")" << std::endl;
+	*/
+	//locate the furthest vertex in direction of d
+
+	std::vector<Util::Vector>::iterator it;
+	int i = 0;
+	for (it = ShapeAPtr.begin(); it < ShapeAPtr.end();it++, i++) {
+		/*
+		std::cout << "   support() - p1Simp lookup - i: " << i << std::endl;
+		std::cout << "   support() - p1Simp lookup - ShapeAPtr (" << ShapeAPtr.at(i).x << ", " << ShapeAPtr.at(i).z << ")" << std::endl;
+		std::cout << "   support() - p1Simp lookup - (DVector*ShapeAPtr.at(i) " << DVector*ShapeAPtr.at(i) << std::endl;
+		std::cout << "   support() - p1Simp lookup - (DVector*p1Simp " << DVector*p1Simp << std::endl;
+		*/
+		if (DVector*ShapeAPtr.at(i) < DVector*p1Simp) {
+			p1Simp = ShapeAPtr.at(i);
+			//std::cout << "  support() - p1Simp (" << p1Simp.x << ", " << p1Simp.z << ")" << std::endl;
+		}
+	}
+
+	//DVector = -DVector;
+	i = 0;
+	for (it = ShapeBPtr.begin(); it < ShapeBPtr.end(); it++, i++) {
+		/*
+		std::cout << "   support() - p2Simp lookup - i: " << i << std::endl;
+		std::cout << "   support() - p2Simp lookup - ShapeBPtr (" << ShapeBPtr.at(i).x << ", " << ShapeBPtr.at(i).z << ")" << std::endl;
+		std::cout << "   support() - p2Simp lookup - (DVector*ShapeBPtr.at(i) " << DVector*ShapeBPtr.at(i) << std::endl;
+		std::cout << "   support() - p2Simp lookup - (DVector*p2Simp " << DVector*p2Simp << std::endl;
+		*/
+		if (DVector*ShapeBPtr.at(i) > DVector*p2Simp) {
+			p2Simp = ShapeBPtr.at(i);
+			//std::cout << "  support() - p2Simp (" << p2Simp.x << ", " << p2Simp.z << ")" << std::endl;
+		}
+	}
+	/*
+	std::cout << "   support() - p1Simp :(" << p1Simp.x << ", " << p1Simp.z << ")" << std::endl;
+	std::cout << "   support() - p2Simp :(" << p2Simp.x << ", " << p2Simp.z << ")" << std::endl;
+	*/
+	//DVector = -DVector; 
+
+	MinkowskiDiff = p2Simp - p1Simp;
+	//DBG 
+	std::cout << "    support() - about to add point :(" << MinkowskiDiff.x << ", " << MinkowskiDiff.z << ") to simplex" << std::endl;
+	
+	return MinkowskiDiff; //choice f d depends from a and b
+}
+
+Util::Vector tripleProduct(Util::Vector A, Util::Vector B, Util::Vector C) {
+	Util::Vector tripleProduct;
+	
+	tripleProduct = (B*(C*A)) - (A*(C*B));
+
+	return tripleProduct;
+}
+
+bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util::Vector& DVector) {
+	//std::vector<Util::Vector> simplexPtr;
+	//simplexPtr =  _simplex;
+
+
+	//DBG print of simplex and d
+	/*
+	std::cout << std::endl;	std::cout << std::endl;
+	std::vector<Util::Vector>::iterator it;
+	std::cout << "containsOrigin() - print all simplex point /it/ - size: " << _simplex.size() << std::endl;
+	int i = 0;
+	for (it = _simplex.begin(); it < _simplex.end(); it++, i++)
+	{
+		std::cout << " _simplex "<< i<<" :(" << _simplex.at(i).x << ", " << _simplex.at(i).z << ")" << std::endl;
+	}
+	std::cout << "containsOrigin() - DVector :(" << DVector.x << ", " << DVector.z << ")" << std::endl;
+	*/
+	//last entry in the simplex
+	Util::Vector a = _simplex.at(_simplex.size() - 1);
+	//DBG std::cout << "containsOrigin() - lastSimplex :(" << lastSimplex.x << ", " << lastSimplex.z << ")" << std::endl;
+	Util::Vector a0, b, ab, abPerp, c, ac, acPerp;
+	//std::cout << "containsOrigin() - lastpoint /a/ on simplex: (" << a.x << ", " << a.z << ")" << std::endl;
+
+	a0 = -a;
+	//DBG std::cout << "containsOrigin() - a0 :(" << a0.x << ", " << a0.z << ")" << std::endl;
+	if (_simplex.capacity() == 3) { //if simplex triangel
+		std::cout << "      Simplex is a triangle" << std::endl;
+
+		//we already have 3 points
+		b = _simplex.at(_simplex.size()-2);
+		c = _simplex.at(_simplex.size() - 3); //c is at index 0
+		/*
+		std::cout << "containsOrigin() - b :(" << b.x << ", " << b.z << ")" << std::endl;
+		std::cout << "containsOrigin() - c :(" << c.x << ", " << c.z << ")" << std::endl;
+		*/
+		//calculate the edges
+		ab = b - a;
+		ac = c - a;
+		//normals
+		abPerp = tripleProduct(ac, ab, ab);
+		acPerp = tripleProduct(ab, ac, ac);
+		//if origin is in R4 -> abPerp*a0 > 0
+		//std::cout << "is R4? - (abPerp*a0) > 0 " << acPerp*a0 << std::endl;
+		if (abPerp*a0 > 0) { // if (abPerp*a0 > 0)
+			//remove c
+			for (int i = 0; i < _simplex.size(); i++) {
+				if ((_simplex.at(i) == c)) { //we are at c
+					std::cout << "REMOVING c" << std::endl;
+					_simplex.erase(_simplex.begin() + i);
+				}
+			}
+			// DBG print of simplex 
+			/*
+			std::cout << "containsOrigin() - print all simplex point - size: " << _simplex.size() << std::endl;
+			for (int i = 0; i < _simplex.size(); i++)
+			{
+				std::cout << "  _simplex " << i << " :(" << _simplex.at(i).x << ", " << _simplex.at(i).z << ")" << std::endl;
+			}
+			*/
+
+			//change d abPerp
+			DVector = abPerp;
+		} else { // else (abPerp*a0 > 0)
+			//origin is R3
+			//std::cout << "is R3? - (acPerp*a0) > 0 " << acPerp*a0  << std::endl;
+
+			if (acPerp*a0 > 0) { // if (acPerp*a0 > 0)
+				//remove point b
+				for (int i = 0; i < _simplex.size(); i++) {
+					if ((_simplex.at(i) == b)) { //we are at  b
+						std::cout << "REMOVING b" << std::endl;
+						_simplex.erase(_simplex.begin() + i);
+						//do the removal
+					}
+				}
+				std::cout << "size: " << _simplex.size() << "|capacity: " << _simplex.capacity() << std::endl;
+
+				DVector = acPerp;
+			} else { // else (acPerp*a0 > 0) 
+				//std::cout <<  std::endl;
+
+				std::cout << "        It is in R5." <<  std::endl;
+				std::cout << "        About to return to JGK with true: " << _simplex.size() << std::endl;
+				int i = 0;
+				std::vector<Util::Vector>::iterator it;
+				for (it = _simplex.begin(); it < _simplex.end(); it++, i++)
+				{
+					std::cout << "        _simplex " << i << " :(" << _simplex.at(i).x << ", " << _simplex.at(i).z << ")" << std::endl;
+				}
+
+				//std::cout << "About to return from containsOrigin() -  returning true - line 278" << std::endl;
+				return true;
+		
+			}
+		}
+	} else { //else - if simplex triangle
+		std::cout << "      Simplex is a line" << std::endl;
+		//it it a line - get(B) - it is second to last point
+		b = _simplex.at(_simplex.size()-2);
+		//std::cout << "b :(" << b.x << ", " << b.z << ")" << std::endl;
+
+		//get AB
+		ab = b - a;
+		//calc abPerp
+		abPerp = tripleProduct(ab, a0, ab);
+		//set d to abPerp
+		DVector = abPerp;
+		//std::cout << "d :(" << DVector.x << ", " << DVector.z << ")" << std::endl;
+
+	}
+	return false; //simplex does containt origin -> collision
+}
+
 bool SteerLib::GJK_EPA::GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
-	const std::vector<Util::Vector> _simplex) {
+	 std::vector<Util::Vector>& _simplex) {
+	Util::Vector d;
+	Util::Vector c1, c2, tempVect;
 
+	c1 = polygonCenter(_shapeA);
+	//DBG std::cout << " GJK() - Center A:(" << c1.x << ", " << c1.z << ")" << std::endl;
+	c2 = polygonCenter(_shapeB);
+	//DBG std::cout << " GJK() - Center B :(" << c2.x << ", " << c2.z << ")" << std::endl;
+	d = c1 - c2;
+	//DBG std::cout << " GJK() - D :(" << d.x << ", " << d.z << ")" << std::endl;
 
+	//DBG - print tempVect 
+	//DBG std::cout << "tempVect :(" << tempVect.x << ", " << tempVect.z << ")" << std::endl;
+	
+	//enter first Minkowski Difference point
+	//DBG std::cout <<  " GJK() - first call to support:(" << d.x << ", " << d.z << ")" << std::endl;
+	_simplex.push_back(support(_shapeA, _shapeB, d));
+	//negate d
+	d = -d;
+	//DBG std::cout << "GJK() - D - right after negation:(" << d.x << ", " << d.z << ")" << std::endl;
 
+	int iterationCounter = 0;
+
+	while (true) {
+
+		_simplex.push_back(support(_shapeA, _shapeB, d));
+
+		if (_simplex.at(_simplex.size()-1) * d <= 0) {
+			//DBG 
+			/*
+			std::cout << "About to exit from GJK returning false to CollisionAIModule" << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			*/
+			return false; //no collision
+		} else {
+			//std::cout << " GJK() - Calling containsOrigin - iteration: " << iterationCounter << std::endl;
+
+			if (containsOrigin(_simplex, d)) {
+				//DBG 
+				/*
+				std::cout << "About to exit from GJK returning true to CollisionAIModule" << std::endl;
+				std::cout << std::endl;
+				std::cout << std::endl;
+				*/
+				return true;  //Origin in simplex - collision 100%
+			}
+		}
+		iterationCounter++;
+	}
 	return true; //is_colliding
 }
 
 bool SteerLib::GJK_EPA::intersect(float& return_penetration_depth, Util::Vector& return_penetration_vector, 
 	const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB)
 {
-	std::vector<Util::Vector> _simplex;
+	std::vector<Util::Vector> simplex;
 	bool is_colliding = false;
 
-	//The caller sends permutation of all shapes 
+	//The caller sends completee permutation of all shapes 
 	//We are comparing only two
 	//Since we deal with vertices at this point
 
 	if (!calculateAABB(_shapeA, _shapeB)) { //if AABB - returns false - skip those polygons
-		//DBG std::cout << "Polygons cannot intersect - exiting this set .. " << std::endl;
+		//DBG std::cout << "intersect() - Polygons cannot intersect - exiting this set .. " << std::endl;
 		return false;
 	}
 	//if calculatwAABB return true
 	//will run the GJK algorithm on the polygons
-	else
-		is_colliding = GJK(_shapeA, _shapeB, _simplex);
-			
+	else {
+		is_colliding = GJK(_shapeA, _shapeB, simplex);
+		//DBG std::cout << "intersect() - Those two polygons are intersecting." << std::endl;
+
+
 		return true;
-	//DBG std::cout << "Those two polygons can intersect." << std::endl;
-
-
-
-
+	}
 
 	return false; // There is no collision
 }

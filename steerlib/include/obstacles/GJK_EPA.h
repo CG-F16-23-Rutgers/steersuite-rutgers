@@ -131,7 +131,11 @@ namespace SteerLib
 		static bool intersect(float& return_penetration_depth, Util::Vector& return_penetration_vector, const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB);
 	private:
 		static bool calculateAABB(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB);
-		static bool GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB, const std::vector<Util::Vector> _simplex);
+		static Util::Vector polygonCenter(const std::vector<Util::Vector>& _shape);
+		static Util::Vector support(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
+			Util::Vector& DVector);
+		static bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util::Vector& DVector);
+		static bool GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,  std::vector<Util::Vector>& _simplex);
 
 	}; // class GJK_EPA
 
