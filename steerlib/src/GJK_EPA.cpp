@@ -203,6 +203,7 @@ Util::Vector tripleProduct(Util::Vector A, Util::Vector B, Util::Vector C) {
 }
 
 bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util::Vector& DVector) {
+	std::vector<Util::Vector>::iterator it;
 	//std::vector<Util::Vector> simplexPtr;
 	//simplexPtr =  _simplex;
 
@@ -210,7 +211,6 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 	//DBG print of simplex and d
 	/*
 	std::cout << std::endl;	std::cout << std::endl;
-	std::vector<Util::Vector>::iterator it;
 	std::cout << "containsOrigin() - print all simplex point /it/ - size: " << _simplex.size() << std::endl;
 	int i = 0;
 	for (it = _simplex.begin(); it < _simplex.end(); it++, i++)
@@ -219,21 +219,22 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 	}
 	std::cout << "containsOrigin() - DVector :(" << DVector.x << ", " << DVector.z << ")" << std::endl;
 	*/
+
 	//last entry in the simplex
 	Util::Vector a = _simplex.at(_simplex.size() - 1);
 	//DBG std::cout << "containsOrigin() - lastSimplex :(" << lastSimplex.x << ", " << lastSimplex.z << ")" << std::endl;
 	Util::Vector a0, b, ab, abPerp, c, ac, acPerp;
-	//std::cout << "containsOrigin() - lastpoint /a/ on simplex: (" << a.x << ", " << a.z << ")" << std::endl;
+	//DBG std::cout << "containsOrigin() - lastpoint /a/ on simplex: (" << a.x << ", " << a.z << ")" << std::endl;
 
 	a0 = -a;
 	//DBG std::cout << "containsOrigin() - a0 :(" << a0.x << ", " << a0.z << ")" << std::endl;
 	if (_simplex.capacity() == 3) { //if simplex triangel
-		//std::cout << "      Simplex is a triangle" << std::endl;
+		//DBG std::cout << "      Simplex is a triangle" << std::endl;
 
 		//we already have 3 points
-		b = _simplex.at(_simplex.size()-2);
+		b = _simplex.at(_simplex.size() - 2);
 		c = _simplex.at(_simplex.size() - 3); //c is at index 0
-		/*
+		/*DBG
 		std::cout << "containsOrigin() - b :(" << b.x << ", " << b.z << ")" << std::endl;
 		std::cout << "containsOrigin() - c :(" << c.x << ", " << c.z << ")" << std::endl;
 		*/
@@ -244,7 +245,7 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 		abPerp = tripleProduct(ac, ab, ab);
 		acPerp = tripleProduct(ab, ac, ac);
 		//if origin is in R4 -> abPerp*a0 > 0
-		//std::cout << "is R4? - (abPerp*a0) > 0 " << acPerp*a0 << std::endl;
+		//DBG std::cout << "is R4? - (abPerp*a0) > 0 " << acPerp*a0 << std::endl;
 		if (abPerp*a0 > 0) { // if (abPerp*a0 > 0)
 			//remove c
 			for (int i = 0; i < _simplex.size(); i++) {
@@ -256,15 +257,16 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 
 			//change d abPerp
 			DVector = abPerp;
-		} else { // else (abPerp*a0 > 0)
-			//origin is R3
-			//std::cout << "is R3? - (acPerp*a0) > 0 " << acPerp*a0  << std::endl;
+		}
+		else { // else (abPerp*a0 > 0)
+		 //origin is R3
+			//DBG std::cout << "is R3? - (acPerp*a0) > 0 " << acPerp*a0 << std::endl;
 
 			if (acPerp*a0 > 0) { // if (acPerp*a0 > 0)
 				//remove point b
 				for (int i = 0; i < _simplex.size(); i++) {
 					if ((_simplex.at(i) == b)) { //we are at  b
-						std::cout << "REMOVING b" << std::endl;
+						//DBG std::cout << "REMOVING b" << std::endl;
 						_simplex.erase(_simplex.begin() + i);
 						//do the removal
 					}
@@ -272,11 +274,14 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 				std::cout << "size: " << _simplex.size() << "|capacity: " << _simplex.capacity() << std::endl;
 
 				DVector = acPerp;
-			} else { // else (acPerp*a0 > 0) 
-				//std::cout <<  std::endl;
-				/*
-				std::cout << "        It is in R5." <<  std::endl;
+			}
+			else { // else (acPerp*a0 > 0) 
+			 /*DBG std::cout <<  std::endl;
+
+				std::cout << "        It is in R5." << std::endl;
 				std::cout << "        About to return to JGK with true: " << _simplex.size() << std::endl;
+				*/
+				/*DBG
 				int i = 0;
 				std::vector<Util::Vector>::iterator it;
 				for (it = _simplex.begin(); it < _simplex.end(); it++, i++)
@@ -284,29 +289,31 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 					std::cout << "        _simplex " << i << " :(" << _simplex.at(i).x << ", " << _simplex.at(i).z << ")" << std::endl;
 				}
 				*/
-				//std::cout << "About to return from containsOrigin() -  returning true - line 278" << std::endl;
+				//DBG std::cout << "About to return from containsOrigin() -  returning true - line 278" << std::endl;
 				return true;
-		
+
 			}
 		}
 	} else { //else - if simplex triangle - simplex is a line
-		std::cout << "      Simplex is a line" << std::endl;
+		//DBG std::cout << "      Simplex is a line" << std::endl;
 		//it it a line - get(B) - it is second to last point
 		b = _simplex.at(_simplex.size()-2);
-		//std::cout << "b :(" << b.x << ", " << b.z << ")" << std::endl;
+		//DBG std::cout << "b :(" << b.x << ", " << b.z << ")" << std::endl;
 
 		//get AB
 		ab = b - a;
 		//calc abPerp
 		abPerp = tripleProduct(ab, a0, ab);
-		//std::cout << "abPerp:" << abPerp << std::endl;
+		//DBG std::cout << "abPerp:" << abPerp << std::endl;
+
 		//if abPerp is 0 - use the normal
+		/**/
 		if (abPerp.x == 0 && abPerp.y == 0 && abPerp.z == 0) {
 			abPerp = b - a;
 			abPerp = normalize(abPerp);
-			//std::cout << "abPerp:" << abPerp << std::endl;
-
+			//DBG std::cout << "abPerp:" << abPerp << std::endl;
 		}
+		
 
 		//set d to abPerp
 		DVector = abPerp;
@@ -318,16 +325,20 @@ bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util
 
 bool SteerLib::GJK_EPA::GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
 	 std::vector<Util::Vector>& _simplex) {
-	Util::Vector d;
+	Util::Vector d(1,0,-1);
 	Util::Vector c1, c2, tempVect;
-
+	
 	c1 = polygonCenter(_shapeA);
-	//DBG 
-	//std::cout << " GJK() - Center A:(" << c1.x << ", " << c1.z << ")" << std::endl;
+	//DBG std::cout << " GJK() - Center A:(" << c1.x << ", " << c1.z << ")" << std::endl;
 	c2 = polygonCenter(_shapeB);
-	//DBG 
-	//std::cout << " GJK() - Center B :(" << c2.x << ", " << c2.z << ")" << std::endl;
+	//DBG std::cout << " GJK() - Center B :(" << c2.x << ", " << c2.z << ")" << std::endl;
 	d = c1 - c2;
+	
+	//overwrite the center if both points are on one line
+	if (d.x == 0 || d.z == 0)
+	{
+		d.x = 1; d.z = -1;
+	}
 	//DBG std::cout << " GJK() - D :(" << d.x << ", " << d.z << ")" << std::endl;
 
 	//DBG - print tempVect 
@@ -382,38 +393,69 @@ Util::Vector SteerLib::GJK_EPA::normalize(Util::Vector& _toNormalize) {
 	return _toNormalize;
 }
 
-void SteerLib::GJK_EPA::getNearestEdge(std::vector<Util::Vector>& simplex, float& distance,
+void SteerLib::GJK_EPA::getNearestEdge(std::vector<Util::Vector>& _simplex, float& distance,
 	Util::Vector& normal, int& index) {
 	distance = FLT_MAX;
 	std::vector<Util::Vector>::iterator it;
 	Util::Vector v1, v2, edge, originTov1, n;
 	float dist;
-
-
 	int i = 0, j = 0;
-	for (it = simplex.begin(); it < simplex.end(); it++, i++) {
-		if (i + 1 == simplex.size())
+
+	//DBG print of EPA simplex
+	/*
+	std::cout << std::endl;	std::cout << std::endl;
+	std::cout << "getNearestEdge() - print all simplex points| size: " << _simplex.size() << std::endl;
+	 i = 0;
+	for (it = _simplex.begin(); it < _simplex.end(); it++, i++)
+	{
+		std::cout << " _simplex " << i << " :(" << _simplex.at(i).x << ", " << _simplex.at(i).z << ")" << std::endl;
+	}
+	*/
+
+	i=0, j = 0;
+	for (it = _simplex.begin(); it < _simplex.end(); it++, i++) {
+		if (i + 1 == _simplex.size())
 			j = 0;
 		else
 			j = i + 1;
-		v1 = simplex[i];
-		v2 = simplex[j];
+		v1 = _simplex[i];
+		v2 = _simplex[j];
+		//DBG std::cout << " getNearestEdge() - v1 :(" << v1.x << ", " << v1.z << ")" << std::endl;
+		//DBG std::cout << " getNearestEdge() - v2 :(" << v2.x << ", " << v2.z << ")" << std::endl;
 
 		edge = v2 - v1;
+		//DBG std::cout << " getNearestEdge() - edge:(" << edge.x << ", " << edge.z << ")" << std::endl;
 
 		originTov1 = v1;
+		//DBG std::cout << " getNearestEdge() - originTov1:(" << originTov1.x << ", " << originTov1.z << ")" << std::endl;
 
 		n = tripleProduct(edge, originTov1, edge);
-		n = normalize(n);
+		//DBG std::cout << " getNearestEdge() - n after tripleProduct:(" << n.x << ", " << n.z << ")" << std::endl;
+		if (n.norm() != 0) n = normalize(n);
+		//DBG std::cout << " getNearestEdge() - n after normalization:(" << n.x << ", " << n.z << ")" << std::endl;
+		//DBG std::cout << " getNearestEdge() - n :(" << n.x << ", " << n.z << ")" << std::endl;
 		//distance from origin to the edge
 		dist = n*v1;
+		//DBG std::cout << " getNearestEdge() - dist :(" << dist << ")" << std::endl;
 
 		if (dist < distance) {
 			distance = dist;
 			index = j;
 			normal = n;
+			/*DBG
+			std::cout << "   getNearestEdge() - distance :(" << distance << ")" << std::endl;
+			std::cout << "   getNearestEdge() - index :(" << index << ")" << std::endl;
+			std::cout << "   getNearestEdge() - normal :(" << n.x << ", " << n.z << ")" << std::endl;
+			*/
+
+
 		}
 	}
+	/*DBG
+	std::cout << " getNearestEdge() - distance :(" << distance << ")" << std::endl;
+	std::cout << " getNearestEdge() - index :(" << index << ")" << std::endl;
+	std::cout << " getNearestEdge() - normal :(" << n.x << ", " << n.z << ")" << std::endl;
+	*/
 	return;
 }
 
@@ -432,14 +474,32 @@ void SteerLib::GJK_EPA::EPA(const std::vector<Util::Vector>& _shapeA, const std:
 		sup = support(_shapeA, _shapeB, normal);
 		d = sup*normal;
 
+		//DBG std::cout << " EPA() - d :(" << d << ")" << std::endl;
+		//DBG std::cout << " EPA() - distance :(" << distance << ")" << std::endl;
+
 		if (d - distance <= 0)
 		{
+
 			penetration_vector = normal;
 			penetration_depth = distance;
 			return;
 		}
 		else {
 			simplex.insert(simplex.begin() + i, sup);
+
+		//DBG print of EPA simplex
+		/*
+		std::cout << std::endl;	std::cout << std::endl;
+		std::vector<Util::Vector>::iterator it;
+		std::cout << "EPA() - print all simplex point /it/ - size: " << simplex.size() << std::endl;
+		i = 0;
+		for (it = simplex.begin(); it < simplex.end(); it++, i++)
+		{
+		std::cout << " simplex "<< i<<" :(" << simplex.at(i).x << ", " << simplex.at(i).z << ")" << std::endl;
+		}
+		*/
+
+
 		}
 	}
 
@@ -454,10 +514,11 @@ bool SteerLib::GJK_EPA::intersect(float& return_penetration_depth, Util::Vector&
 	shapePtr = _shapeA;
 
 
-	/*
+	/**/
 	std::vector<Util::Vector>::iterator it;
-	int i = 0;
 	shapePtr = _shapeA;
+	/*DBG
+	int i = 0;
 	std::cout << "shapeA:";
 	for (it = shapePtr.begin(); it < shapePtr.end(); it++, i++) {
 		std::cout << "(" << shapePtr.at(i).x << ", " << shapePtr.at(i).z << ")|";
