@@ -132,11 +132,15 @@ namespace SteerLib
 	private:
 		static bool calculateAABB(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB);
 		static Util::Vector polygonCenter(const std::vector<Util::Vector>& _shape);
-		static Util::Vector support(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
-			Util::Vector& DVector);
+		static Util::Vector support(const std::vector<Util::Vector>& _shapeA, 
+			const std::vector<Util::Vector>& _shapeB, Util::Vector& DVector);
 		static bool SteerLib::GJK_EPA::containsOrigin(std::vector<Util::Vector>& _simplex, Util::Vector& DVector);
 		static bool GJK(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,  std::vector<Util::Vector>& _simplex);
-
+		static Util::Vector SteerLib::GJK_EPA::normalize(Util::Vector& _toNormalize);
+		static void SteerLib::GJK_EPA::getNearestEdge(std::vector<Util::Vector>& simplex, float& distance, 
+			Util::Vector& normal, int& index);
+		static void SteerLib::GJK_EPA::EPA(const std::vector<Util::Vector>& _shapeA, const std::vector<Util::Vector>& _shapeB,
+			std::vector<Util::Vector>& simplex, float& penetration_depth, Util::Vector& penetration_vector);
 	}; // class GJK_EPA
 
 } // namespace SteerLib
