@@ -147,14 +147,14 @@
         <desiredSpeed>1.3</desiredSpeed>
         <timeDuration>1000.0</timeDuration>
       </seekStaticTarget>
-      <!--
+      <!-- Red flees Yellow 
       <fleeDynamicTarget>
-        <targetName>Agent B</targetName>
-        <random>true</random>
+        <targetName>Agent C</targetName>
+        <random>false</random>
         <desiredSpeed>1.3</desiredSpeed>
         <timeDuration>100.0</timeDuration>
       </fleeDynamicTarget>
-      -->
+    -->
     </goalSequence>
 
   </agent>
@@ -178,7 +178,16 @@
         <desiredSpeed>1.3</desiredSpeed>
         <timeDuration>1000.0</timeDuration>
       </seekStaticTarget>
-    <!---->
+      <seekStaticTarget>
+        <targetLocation>
+          <x>30</x>
+          <y>0</y>
+          <z>25</z>
+        </targetLocation>
+        <desiredSpeed>1.3</desiredSpeed>
+        <timeDuration>1000.0</timeDuration>
+      </seekStaticTarget>
+      <!--
       <seekDynamicTarget>
         <targetName>Agent A</targetName>
         <random>true</random>
@@ -205,14 +214,14 @@
         <desiredSpeed>1.3</desiredSpeed>
         <timeDuration>1000.0</timeDuration>
       </seekStaticTarget>
-
-      <fleeDynamicTarget>
+      <!--Yellow Seeks Red -->
+      <seekDynamicTarget>
         <targetName>Agent A</targetName>
         <random>false</random>
         <desiredSpeed>1.3</desiredSpeed>
         <timeDuration>100.0</timeDuration>
-      </fleeDynamicTarget>
-
+      </seekDynamicTarget>
+      
     </goalSequence>
 
   </agent>

@@ -93,12 +93,12 @@ protected:
 	// Added vars for assignment B3
 	std::set<std::string> setTargetsDynSeek;
 	std::set<std::string> setTargetsDynFlee;
-	void SocialForcesAgent::external_forces(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	void SocialForcesAgent::update_accel_agents_forces(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &_acceleration);
 	bool SocialForcesAgent::updateStaticGoal(float timeStamp, float dt, unsigned int frameNumber);
 	bool SocialForcesAgent::noGoalRemained();
-	void SocialForcesAgent::pursueAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
-	void SocialForcesAgent::evadeAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
-	void SocialForcesAgent::indBehaviorAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	void SocialForcesAgent::seekAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	void SocialForcesAgent::fleeAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	void SocialForcesAgent::update_acceleration_indiv_Behaviour(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &_acceleration);
 	std::string agentName;
 	//End added vars for B3
 
