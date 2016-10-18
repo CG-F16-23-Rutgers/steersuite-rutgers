@@ -90,6 +90,20 @@ protected:
 	// Used to store Waypoints between goals
 	// A waypoint is choosen every FURTHEST_LOCAL_TARGET_DISTANCE
 
+	// Added vars for assignment B3
+	std::set<std::string> setTargetsDynSeek;
+	std::set<std::string> setTargetsDynFlee;
+	void SocialForcesAgent::external_forces(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	bool SocialForcesAgent::updateStaticGoal(float timeStamp, float dt, unsigned int frameNumber);
+	bool SocialForcesAgent::noGoalRemained();
+	void SocialForcesAgent::pursueAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	void SocialForcesAgent::evadeAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	void SocialForcesAgent::indBehaviorAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
+	std::string agentName;
+	//End added vars for B3
+
+
+
 private:
 	// bool runLongTermPlanning();
 	// bool reachedCurrentWaypoint();
