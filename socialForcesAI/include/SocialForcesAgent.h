@@ -19,10 +19,10 @@
 
 
 /**
- * @brief Social Forces Agent stuff
- *
- *
- */
+* @brief Social Forces Agent stuff
+*
+*
+*/
 
 // #define DRAW_ANNOTATIONS 1
 // #define DRAW_HISTORIES 1
@@ -42,10 +42,10 @@ public:
 	bool enabled() const { return _enabled; }
 	Util::Point position() const { return _position; }
 	Util::Vector forward() const { return _forward; }
-	Util::Vector velocity() const {return _velocity; }
+	Util::Vector velocity() const { return _velocity; }
 	float radius() const { return _radius; }
 	const SteerLib::AgentGoalInfo & currentGoal() const { return _goalQueue.front(); }
-	size_t id() const { return id_;}
+	size_t id() const { return id_; }
 	const std::queue<SteerLib::AgentGoalInfo> & agentGoals() const { return _goalQueue; }
 	void addGoal(const SteerLib::AgentGoalInfo & newGoal) { throw Util::GenericException("addGoals() not implemented yet for SocialForcesAgent"); }
 	void clearGoals() { throw Util::GenericException("clearGoals() not implemented yet for SocialForcesAgent"); }
@@ -55,8 +55,8 @@ public:
 	/// The Util namespace helper functions do the job nicely for basic circular agents.
 	//@{
 	bool intersects(const Util::Ray &r, float &t) { return Util::rayIntersectsCircle2D(_position, _radius, r, t); }
-	bool overlaps(const Util::Point & p, float radius) { return Util::circleOverlapsCircle2D( _position, _radius, p, radius); }
-	float computePenetration(const Util::Point & p, float radius) { return Util::computeCircleCirclePenetration2D( _position, _radius, p, radius); }
+	bool overlaps(const Util::Point & p, float radius) { return Util::circleOverlapsCircle2D(_position, _radius, p, radius); }
+	float computePenetration(const Util::Point & p, float radius) { return Util::computeCircleCirclePenetration2D(_position, _radius, p, radius); }
 	//@}
 
 	// bool collidesAtTimeWith(const Util::Point & p1, const Util::Vector & rightSide, float otherAgentRadius, float timeStamp, float footX, float footZ);
@@ -73,8 +73,8 @@ protected:
 
 
 	/**
-		 * \brief   Updates the three-dimensional position and three-dimensional velocity of this agent.
-		 */
+	* \brief   Updates the three-dimensional position and three-dimensional velocity of this agent.
+	*/
 	void update(float timeStamp, float dt, unsigned int frameNumber);
 
 
@@ -89,20 +89,6 @@ protected:
 
 	// Used to store Waypoints between goals
 	// A waypoint is choosen every FURTHEST_LOCAL_TARGET_DISTANCE
-
-	// Added vars for assignment B3
-	std::set<std::string> setTargetsDynSeek;
-	std::set<std::string> setTargetsDynFlee;
-	void SocialForcesAgent::update_accel_agents_forces(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &_acceleration);
-	bool SocialForcesAgent::updateStaticGoal(float timeStamp, float dt, unsigned int frameNumber);
-	bool SocialForcesAgent::noGoalRemained();
-	void SocialForcesAgent::seekAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
-	void SocialForcesAgent::fleeAccel(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &output_acceleration);
-	void SocialForcesAgent::update_acceleration_indiv_Behaviour(float timeStamp, float dt, unsigned int frameNumber, Util::Vector &_acceleration);
-	std::string agentName;
-	//End added vars for B3
-
-
 
 private:
 	// bool runLongTermPlanning();
