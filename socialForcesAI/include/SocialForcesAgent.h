@@ -90,6 +90,7 @@ protected:
 	// Used to store Waypoints between goals
 	// A waypoint is choosen every FURTHEST_LOCAL_TARGET_DISTANCE
 
+
 private:
 	// bool runLongTermPlanning();
 	// bool reachedCurrentWaypoint();
@@ -113,7 +114,16 @@ private:
 
 	friend class SocialForcesAIModule;
 
+	// added from A2
+	//Point avoidCollision(Point goalDirection);
+
+	typedef SocialForcesAgent * SocialForcesAgentPtr;
+	typedef AgentInterface * AgentInterfacePtr;
+
+
+
+	// 
 };
 
-
 #endif
+

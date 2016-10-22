@@ -20,11 +20,43 @@
 
 #define AGENT_MASS 1.0f
 
+struct SourceTargetCouple {
+	int SourceID;
+	std::string SourceName;
+	int TargetID;
+	std::string TargetName;
+	friend bool operator<(SourceTargetCouple const& a, SourceTargetCouple const& b)
+	{
+		return -1;
+	}
+};
+
+typedef SourceTargetCouple* SourceTargetCouplePtr;
+std::set<SourceTargetCouple> SeekCouple;
+std::set<SourceTargetCouple> FleeCouple;
+
+struct AgentColorEntry {
+	int agentID;
+	std::string sourceName;
+	Util::Color sourceColor;
+	friend bool operator<(AgentColorEntry const& a, AgentColorEntry const& b)
+	{
+		return -1;
+	}
+};
+
+typedef AgentColorEntry* AgentColorEntryPtr;
+std::set<AgentColorEntry> AgentColorTable;
+
+
+
 using namespace Util;
 using namespace SocialForcesGlobals;
 using namespace SteerLib;
 
 // #define _DEBUG_ENTROPY 1
+
+// A3 definitins 
 
 SocialForcesAgent::SocialForcesAgent()
 {
@@ -88,11 +120,22 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 {
 	// compute the "old" bounding box of the agent before it is reset.  its OK that it will be invalid if the agent was previously disabled
 	// because the value is not used in that case.
-	// std::cout << "resetting agent " << this << std::endl;
+	//DBG  
+	std::cout << std::endl;
+
+	std::cout << "resetting agent " << id() << std::endl;
 	_waypoints.clear();
 	_midTermPath.clear();
-
+	
 	Util::AxisAlignedBox oldBounds(_position.x - _radius, _position.x + _radius, 0.0f, 0.5f, _position.z - _radius, _position.z + _radius);
+
+	//insert in AgentColorTable
+	AgentColorEntry currEntry;
+	currEntry.agentID = id();
+	currEntry.sourceName = initialConditions.name;
+	currEntry.sourceColor = initialConditions.color;
+	AgentColorTable.insert(currEntry);
+	//end insert in AgentColorTable
 
 
 	// initialize the agent based on the initial conditions
@@ -107,6 +150,7 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 	_forward = normalize(initialConditions.direction);
 	_radius = initialConditions.radius;
 	_velocity = initialConditions.speed * _forward;
+
 	// std::cout << "inital colour of agent " << initialConditions.color << std::endl;
 	if (initialConditions.colorSet == true)
 	{
@@ -127,11 +171,12 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 	}
 	else {
 		// if the agent was enabled, then the agent already existed in the database, so update it instead of adding it.
-		// std::cout << "new position is " << _position << std::endl;
-		// std::cout << "new bounds are " << newBounds << std::endl;
-		// std::cout << "reset update " << this << std::endl;
+		//DBG std::cout << "new position is " << _position << std::endl;
+		//DBG std::cout << "new bounds are " << newBounds << std::endl;
+		//DBG std::cout << "reset update " << this << std::endl;
 		getSimulationEngine()->getSpatialDatabase()->updateObject(dynamic_cast<SpatialDatabaseItemPtr>(this), oldBounds, newBounds);
-		// engineInfo->getSpatialDatabase()->updateObject( this, oldBounds, newBounds);
+		// 
+		engineInfo->getSpatialDatabase()->updateObject(this, oldBounds, newBounds);
 	}
 
 	_enabled = true;
@@ -147,8 +192,24 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 	}
 
 	// iterate over the sequence of goals specified by the initial conditions.
-	for (unsigned int i = 0; i<initialConditions.goals.size(); i++) {
-		if (initialConditions.goals[i].goalType == SteerLib::GOAL_TYPE_SEEK_STATIC_TARGET ||
+	bool skippedGoal = false;
+	for (unsigned int i = 0; i < initialConditions.goals.size() && !skippedGoal; i++) {
+		//printout current goal
+		//DBG
+		/*
+		 std::cout << "ic.name: "<< initialConditions.name <<" | goal# " << i
+			 << " | type: " << initialConditions.goals[i].goalType
+			 << " | random?: " << initialConditions.goals[i].targetIsRandom
+			 << std::endl;
+		*/
+		// if goal type is static seek target - add to the goal list
+		if (initialConditions.goals[i].goalType == GOAL_TYPE_IDLE)
+		{
+			//DO NOTHING
+			break;
+		}
+
+		else if (initialConditions.goals[i].goalType == SteerLib::GOAL_TYPE_SEEK_STATIC_TARGET ||
 			initialConditions.goals[i].goalType == GOAL_TYPE_AXIS_ALIGNED_BOX_GOAL)
 		{
 			if (initialConditions.goals[i].targetIsRandom)
@@ -156,20 +217,117 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 				// if the goal is random, we must randomly generate the goal.
 				// std::cout << "assigning random goal" << std::endl;
 				SteerLib::AgentGoalInfo _goal;
-				_goal.targetLocation = getSimulationEngine()->getSpatialDatabase()->randomPositionWithoutCollisions(1.0f, true);
+				_goal.targetLocation =
+					getSimulationEngine()->getSpatialDatabase()->randomPositionWithoutCollisions(1.0f, true);
 				_goalQueue.push(_goal);
 				_currentGoal.targetLocation = _goal.targetLocation;
+
 			}
 			else
 			{
+				//AgentGoalInfo _goal;
+
 				_goalQueue.push(initialConditions.goals[i]);
+				//DBG
+				/*
+				std::cout
+					<< "ic.name: " << initialConditions.name
+					<< " | ic.targetname " << initialConditions.goals[i].targetName
+					<< std::endl;
+					*/
 			}
 		}
+		// if goal type is dynamic seek or flee target
+		else if (initialConditions.goals[i].goalType == GOAL_TYPE_SEEK_DYNAMIC_TARGET)
+		{
+			/**/
+			//show before inserting
+			/**
+			std::cout
+				<< "Before insert - Listing initial condiitons per agent - goal id i: " << i 
+				<< " | id(): " << id() // it->SourceName 
+				<< " | source.name: " << initialConditions.name
+				<< " | targetName: " << initialConditions.goals[i].targetName
+				<< std::endl;
+			*/
+			_goalQueue.push(initialConditions.goals[i]);
+			
+
+			//insert in SeekCouple 
+			SourceTargetCouple couplePtr;
+			couplePtr.SourceID = id();
+			couplePtr.SourceName = initialConditions.name;
+			couplePtr.TargetName = initialConditions.goals[i].targetName;
+				AgentInitialConditions aic;
+				aic = getAgentConditions(this);
+				couplePtr.TargetID = stoi((aic.name).substr(5));
+			SeekCouple.insert(couplePtr);
+			// end insert routine
+
+
+			//get the id of the target agent 
+			/* testing 
+			SteerLib::AgentGoalInfo agi;
+			SteerLib::AgentInitialConditions aic;
+			agi.targetName;
+			aic.name;
+			AgentInterface ai;
+			ai.agentNeighbors_
+			*/
+				//tmp_agent = dynamic_cast<SocialForcesAgent*> (*neighbour);
+
+				std::cout
+					<< "0000-getting the tagretagent: " << initialConditions.goals[i].targetName
+					<< " | targetName: " << initialConditions.goals[i].targetName
+					<< " | source.name: " << initialConditions.name
+					<< " | : " 
+					<< std::endl;
+
+			
+			/*
+			std::cout
+				<< "After insert: " << SeekCouple.size()
+				<< std::endl;
+			*/
+			
+
+			//DBG
+			//show after insert
+			/*
+			std::set<SourceTargetCouple>::iterator it;
+			for (it = SeekCouple.begin(); it != SeekCouple.end(); it++)
+			{
+				std::cout
+					<< "After insert - it->SourceName: " << it->SourceName // it->SourceName 
+					<< " | it->TargetName: " << it->TargetName
+					<< std::endl;
+			}
+			*/
+
+					
+		}
+
+		else if (initialConditions.goals[i].goalType == GOAL_TYPE_FLEE_DYNAMIC_TARGET)
+		{
+
+			_goalQueue.push(initialConditions.goals[i]);
+			
+			SourceTargetCouple couplePtr;
+			couplePtr.SourceID = id();
+			couplePtr.SourceName = initialConditions.name;
+			couplePtr.TargetName = initialConditions.goals[i].targetName;
+
+			FleeCouple.insert(couplePtr);
+
+		}
+
 		else {
+			//hold on throwing an exception
+			std::cout << "here they throw an exception for unsupported goal types" << std::endl;
 			throw Util::GenericException("Unsupported goal type; SocialForcesAgent only supports GOAL_TYPE_SEEK_STATIC_TARGET and GOAL_TYPE_AXIS_ALIGNED_BOX_GOAL.");
 		}
 	}
-
+	
 	runLongTermPlanning(_goalQueue.front().targetLocation, dont_plan);
 
 	// std::cout << "first waypoint: " << _waypoints.front() << " agents position: " << position() << std::endl;
@@ -204,10 +362,12 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 		MASS;
 
 	// _velocity = _prefVelocity;
+
 #ifdef _DEBUG_ENTROPY
-	std::cout << "goal direction is: " << goalDirection << " prefvelocity is: " << prefVelocity_ <<
-		" and current velocity is: " << velocity_ << std::endl;
+	std::cout << "goal direction is: " << goalDirection << " prefvelocity is: " << _prefVelocity <<
+		" and current velocity is: " << _velocity << " or " << velocity() << std::endl;
 #endif
+
 
 
 	// std::cout << "Parameter spec: " << _SocialForcesParams << std::endl;
@@ -215,7 +375,51 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 	assert(_forward.length() != 0.0f);
 	assert(_goalQueue.size() != 0);
 	assert(_radius != 0.0f);
+
+
+
+	// 
+	//DBG - these are dynamic goal sets
+	//
+	std::cout
+		<< "reset() --- Sets output"
+		<< std::endl;
+
+	std::set<SourceTargetCouple>::iterator it;
+	for (it = SeekCouple.begin(); it != SeekCouple.end(); it++)
+	{
+		std::cout
+			<< "Seek:it->SourceID: " << it->SourceID
+			<< " | it->SourceName: " << it->SourceName
+			<< " | it->TargetID: " << it->TargetID
+			<< " | it->TargetName: " << it->TargetName
+			<< std::endl;
+	}
+
+	std::set<SourceTargetCouple>::iterator it2;
+	for (it2 = FleeCouple.begin(); it2 != FleeCouple.end(); it2++)
+	{
+		std::cout
+			<< "Flee:it2->SourceName: " << it2->SourceID  
+			<< " | it2->SourceName: " << it2->SourceName
+			<< " | it2->TargetID: " << it2->TargetID
+			<< " | it2->TargetName: " << it2->TargetName
+			<< std::endl;
+	}
+	std::set<AgentColorEntry>::iterator it3;
+	for (it3 = AgentColorTable.begin(); it3 != AgentColorTable.end(); it3++)
+	{
+		std::cout
+			<< "Flee:it3->SourceName: " << it3->sourceName
+			<< " | it3->id: " << it3->agentID
+			<< " | it3->color: " << it3->sourceColor
+			<< std::endl;
+	}
+	//
+ 
+
 }
+
 
 
 void SocialForcesAgent::calcNextStep(float dt)
@@ -765,8 +969,17 @@ dynamic_cast<SocialForcesAIModule *>(rvoModule)->kdTree_->computeAgentNeighbors(
 
 void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNumber)
 {
-	// std::cout << "_SocialForcesParams.rvo_max_speed " << _SocialForcesParams._SocialForcesParams.rvo_max_speed << std::endl;
+	Util::Vector goalDirection;
+	goalDirection.zero();
 	Util::AutomaticFunctionProfiler profileThisFunction(&SocialForcesGlobals::gPhaseProfilers->aiProfiler);
+	std::cout << std::endl;
+	//const SteerLib::AgentInitialConditions & initialConditions = new AgentInitialConditions(initialConditions()
+
+	//DBG
+	int curragentID = id();
+	std::cout << "Entering update for agent id#: " << id()
+		<< std::endl;
+	
 	if (!enabled())
 	{
 		return;
@@ -775,28 +988,340 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	Util::AxisAlignedBox oldBounds(_position.x - _radius, _position.x + _radius, 0.0f, 0.0f, _position.z - _radius, _position.z + _radius);
 
 	SteerLib::AgentGoalInfo goalInfo = _goalQueue.front();
-	Util::Vector goalDirection;
-	// std::cout << "midtermpath empty: " << _midTermPath.empty() << std::endl;
-	if (!_midTermPath.empty() && (!this->hasLineOfSightTo(goalInfo.targetLocation)))
+
+	//DBG std::cout << "midtermpath empty: " << _midTermPath.empty() << std::endl;
+	//std::cout << "reachedCurrentWaypoint: " << reachedCurrentWaypoint() << std::endl;
+
+	//if (goalInfo.goalType = GOAL_TYPE_SEEK_STATIC_TARGET)
+	/*
+	std::cout << "Current goal type is:" << goalInfo.goalType << std::endl;
+
+	std::cout << "AgentINterface.h: _currentLocalTarget: " << _currentLocalTarget << std::endl;
+	std::cout << "_currentGoal-location: " << _currentGoal.targetLocation
+		<< " color " << _color
+		<< " type " << goalInfo.goalType << std::endl;
+	*/
+
+	//if midtermpath is not empty and target location is not in line of sight 
+	std::set<SteerLib::SpatialDatabaseItemPtr> _neighbors;
+	Vector collavvoidGoal;
+	float smallestdistance = 1000, distance;
+	AgentInitialConditions ic;
+	/*
+	std::cout
+		<< "goalInfo.targetName: " << goalInfo.targetName
+		<< " | ic.name: " << ic.name
+		<< std::endl;
+		*/
+	switch (goalInfo.goalType)
+
 	{
-		if (reachedCurrentWaypoint())
+	case 6:
+
+		break;
+	case 0: //updating standard static goal
+	{
+		std::cout << "---0: Updating static goal" << std::endl;
+		if (!_midTermPath.empty() && (!this->hasLineOfSightTo(goalInfo.targetLocation)))
 		{
-			this->updateMidTermPath();
+			if (reachedCurrentWaypoint())
+			{
+				//DBG std::cout << "updating MidTermPath: " << std::endl;
+				this->updateMidTermPath();
+			}
+			//DBG std::cout << "updating LocalTarget: " << std::endl;
+
+			this->updateLocalTarget();
+
+			goalDirection = normalize(_currentLocalTarget - position());
+
+		}
+		else
+		{
+			goalDirection = normalize(goalInfo.targetLocation - position());
+
 		}
 
-		this->updateLocalTarget();
 
-		goalDirection = normalize(_currentLocalTarget - position());
 
+		// do collision avoidance
+		// find closest neighbor
+
+
+		AgentInterface * tmp_agent;
+		//SocialForcesAgent * tmp_agent2;
+
+		getSimulationEngine()->getSpatialDatabase()->getItemsInRange(_neighbors,
+			_position.x - (this->_radius + _SocialForcesParams.sf_query_radius),
+			_position.x + (this->_radius + _SocialForcesParams.sf_query_radius),
+			_position.z - (this->_radius + _SocialForcesParams.sf_query_radius),
+			_position.z + (this->_radius + _SocialForcesParams.sf_query_radius),
+			dynamic_cast<SteerLib::SpatialDatabaseItemPtr>(this));
+
+		//Util::Vector away = Util::Vector(0, 0, 0);
+		//Util::Vector away_obs = Util::Vector(0, 0, 0);
+		//DBG std::cout << "----before the for loop: " << std::endl;
+
+		for (std::set<SteerLib::SpatialDatabaseItemPtr>::iterator neighbour = _neighbors.begin();
+			neighbour != _neighbors.end(); neighbour++)
+			// for (int a =0; a < tmp_agents.size(); a++)
+		{
+
+			if ((*neighbour)->isAgent())
+			{
+				tmp_agent = dynamic_cast<AgentInterface *>(*neighbour);
+				collavvoidGoal.zero();
+				SteerLib::AgentInitialConditions ai = tmp_agent->getAgentConditions(tmp_agent);
+				int id = tmp_agent->id();
+				std::string targetAgentID = "agent" + std::to_string(id);
+				Point targetPosition = tmp_agent->position();
+				Vector targetVelocity = tmp_agent->velocity();
+				Point currentAgentPosition = position();
+				Vector currentAgentVelocity = velocity();
+				float velDot = targetVelocity*currentAgentVelocity;
+				float currentAgentSpeed = currentAgentVelocity.length();
+				float targetagentspeed = targetVelocity.length();
+				distance = pow((targetPosition.x - currentAgentPosition.x), 2) +
+					pow((targetPosition.y - currentAgentPosition.y), 2);
+				//
+				/*
+				std::cout << "---coll: target: " << goalInfo.targetName
+					<< " | targetAgentid: " << id
+					<< " | agentInterfaceName: " << ai.name
+					<< " | targetAgentID: " << targetAgentID
+					<< " | targetposiiton: " << targetPosition
+					<< " | currentposiiton: " << targetPosition
+					<< " | currentAgentPosition: " << currentAgentPosition
+					<< " | distance: " << distance
+					<< " | smallestdistance: " << smallestdistance
+					<< " | targetVelocity: " << targetVelocity
+					<< " | currentAgentVelocity: " << currentAgentVelocity
+					<< " | velDot: " << velDot
+
+					<< std::endl;
+				std::cout << std::endl;
+				*/
+				// this is for collision avoidance
+				/*
+				if (distance < smallestdistance && (velDot) < 0) {
+					//DBG 
+					smallestdistance = distance;
+					collavvoidGoal = normalize((targetPosition)-currentAgentPosition);
+					collavvoidGoal = -.35*collavvoidGoal;
+
+				}
+				*/
+				//for queueing
+				/*
+				if (velDot > .85 && targetagentspeed < currentAgentSpeed &&
+					goalInfo.goalType != 2 && goalInfo.goalType != 3) {
+					//DBG
+					
+					std::cout << "---q1: targetname: " << goalInfo.targetName
+						//<< " | currentAgentVelocity: " << _velocity
+						//<< " | targetVelocity: " << targetVelocity
+						<< " | targetagentspeed: " << targetagentspeed
+						<< " | currentAgentSpeed: " << currentAgentSpeed
+						<< " | velDot: " << velDot
+						<< std::endl;
+					
+					std::cout << "will reduce velocity" << std::endl;
+
+					//_velocity = .5*_velocity;
+					//DBG 
+					
+					std::cout << "---q2: targetname: " << goalInfo.targetName
+						<< " | targetagentspeed: " << targetagentspeed
+						<< " | currentAgentSpeed: " << currentAgentSpeed
+						<< " | velDot: " << velDot
+						<< std::endl;
+						
+				}
+				*/
+			}
+		}
+		//this is the collision avoidance line
+		//goalDirection = goalDirection + collavvoidGoal;
+		//end collision avoidance
+	} break; //end case 0
+
+	case 2: {
+		//scan spacial database for agent with name  goalInfo.targetName
+			getSimulationEngine()->getSpatialDatabase()->getItemsInRange(_neighbors,
+				_position.x - (this->_radius + _SocialForcesParams.sf_query_radius),
+				_position.x + (this->_radius + _SocialForcesParams.sf_query_radius),
+				_position.z - (this->_radius + _SocialForcesParams.sf_query_radius),
+				_position.z + (this->_radius + _SocialForcesParams.sf_query_radius),
+				dynamic_cast<SteerLib::SpatialDatabaseItemPtr>(this));
+
+			//load all current neighbors in neighborsAgentInterface
+			AgentInterface * tmp_agent;
+			std::vector<AgentInterface *> neighborsAgentInterface;
+			for (std::set<SteerLib::SpatialDatabaseItemPtr>::iterator neighbour = _neighbors.begin();
+				neighbour != _neighbors.end(); neighbour++)
+			{
+				if ((*neighbour)->isAgent())
+				{
+					tmp_agent = dynamic_cast<AgentInterface *> (*neighbour);
+					neighborsAgentInterface.push_back(tmp_agent);
+				}
+			}//end creating neighborsAgentInterface list 
+
+			//list all neighborsAgentInterface
+			for (std::vector<SteerLib::AgentInterface *>::iterator currAgentInterface = neighborsAgentInterface.begin();
+				currAgentInterface != neighborsAgentInterface.end(); currAgentInterface++)
+			{
+				Util::Color curColor;
+				std::set<AgentColorEntry>::iterator currAgentColorEntry;
+				//_currentGoal.targetName
+				std::cout << "2.0 - checking case 2: "
+					<< " | currColor: " << _color //this is the color of the source agent
+					<< " | _currentGoal.targetName: " << _currentGoal.targetName
+					<< " | name: " << (*this).getAgentConditions(this).name
+												  //<< " | neighColor: " << (*currAgentInterface)->getAgentConditions(*currAgentInterface).color
+					<< std::endl;
+					//(*this).getAgentConditions(this).name
+					//yellow (1,1,0) is for seeking
+
+				if ( 
+					_color.r == gYellow.r && // gYellow(1.0f, 1.0f, 0.0f)
+					_color.g == gYellow.g &&
+					_color.b == gYellow.b
+					
+					)
+				{
+					//curColor = (*currAgentColorEntry).sourceColor;
+					Point targetPosition = tmp_agent->position();
+					Point currentAgentPosition = position();
+					//here is the seeking force
+					goalDirection = normalize(targetPosition - currentAgentPosition);
+					break;
+				}
+				/*
+				for (currAgentColorEntry = AgentColorTable.begin();
+					currAgentColorEntry != AgentColorTable.end(); currAgentColorEntry++)
+				{
+					if (
+						_color.r == gMagenta.r &&
+						_color.g == gMagenta.g &&
+						_color.b == gMagenta.b
+						)
+					{
+						//curColor = (*currAgentColorEntry).sourceColor;
+						Point targetPosition = tmp_agent->position();
+						Point currentAgentPosition = position();
+						//here is the seeking force
+						goalDirection = normalize(targetPosition - currentAgentPosition);
+						break;
+					}
+				}*/
+			} //end for loop iterating thru neighborsAgentInterface
+		
+	} break;// end case 2:
+	case 3: {
+		//scan spacial database for agent with name  goalInfo.targetName
+		getSimulationEngine()->getSpatialDatabase()->getItemsInRange(_neighbors,
+			_position.x - (this->_radius + _SocialForcesParams.sf_query_radius),
+			_position.x + (this->_radius + _SocialForcesParams.sf_query_radius),
+			_position.z - (this->_radius + _SocialForcesParams.sf_query_radius),
+			_position.z + (this->_radius + _SocialForcesParams.sf_query_radius),
+			dynamic_cast<SteerLib::SpatialDatabaseItemPtr>(this));
+
+		//load all current neighbors in neighborsAgentInterface
+		AgentInterface * tmp_agent;
+		std::vector<AgentInterface *> neighborsAgentInterface;
+		for (std::set<SteerLib::SpatialDatabaseItemPtr>::iterator neighbour = _neighbors.begin();
+			neighbour != _neighbors.end(); neighbour++)
+		{
+			if ((*neighbour)->isAgent())
+			{
+				tmp_agent = dynamic_cast<AgentInterface *> (*neighbour);
+				neighborsAgentInterface.push_back(tmp_agent);
+			}
+		}//end creating neighborsAgentInterface list 
+
+		 //list all neighborsAgentInterface
+		for (std::vector<SteerLib::AgentInterface *>::iterator currAgentInterface = neighborsAgentInterface.begin();
+			currAgentInterface != neighborsAgentInterface.end(); currAgentInterface++)
+		{
+			Util::Color curColor;
+			std::set<AgentColorEntry>::iterator currAgentColorEntry;
+
+			std::cout << "3.0 - checking case 3: "
+				<< " | currColor: " << _color
+				<< std::endl;
+			//grey (.3,.3,.3) is for avoiding
+			if (
+				_color.r == gGray30.r &&
+				_color.g == gGray30.g &&
+				_color.b == gGray30.b
+				)
+			{
+				//curColor = (*currAgentColorEntry).sourceColor;
+				Point targetPosition = tmp_agent->position();
+				Point currentAgentPosition = position();
+				//here is the fleeing force
+				goalDirection = normalize(targetPosition - currentAgentPosition);
+				goalDirection = -goalDirection;
+				break;
+			}
+				/*
+			for (currAgentColorEntry = AgentColorTable.begin();
+				currAgentColorEntry != AgentColorTable.end(); currAgentColorEntry++)
+				//DBG
+				//
+				std::cout << "chekcing case 3: "
+				<< " | currColor: " << (*currAgentColorEntry).sourceColor
+				<< " | colortable id: " << (*currAgentColorEntry).agentID
+				<< " | neighbor id: " << (*currAgentInterface)->id()
+				<< std::endl;
+				 
+				//
+			{
+				//grey (.5,0,.5) is for fleeing
+				if (
+					((*currAgentColorEntry).sourceColor.r == gGray30.r) &&
+					((*currAgentColorEntry).sourceColor.g == gGray30.g) &&
+					((*currAgentColorEntry).sourceColor.b == gGray30.b)
+					)
+				{
+					//
+					std::cout << "chekcing case 3: "
+						<< " | currColor " << (*currAgentColorEntry).sourceColor
+						<< std::endl;
+					//
+					curColor = (*currAgentColorEntry).sourceColor;
+					Point targetPosition = tmp_agent->position();
+					Point currentAgentPosition = position();
+					//here is the fleeing force
+					//goalDirection = normalize(targetPosition - currentAgentPosition);
+					//goalDirection = -goalDirection;
+					break;
+				}
+			}
+			*/
+		} //end for loop iterating thru neighborsAgentInterface
+	} break; // end case3
 	}
-	else
-	{
-		goalDirection = normalize(goalInfo.targetLocation - position());
-	}
+
+
+
+
 	// _prefVelocity = goalDirection * PERFERED_SPEED;
 	Util::Vector prefForce = (((goalDirection * PERFERED_SPEED) - velocity()) / (_SocialForcesParams.sf_acceleration / dt)); //assumption here
+	//DBG
+	/*
+	std::cout << "Calculation of the preffered force: "
+		<< " prefForce " << prefForce
+		<< " velocity " << velocity() << std::endl;
+		*/
 	prefForce = prefForce + velocity();
-	// _velocity = prefForce;
+	//DBG
+	/*std::cout << "2nd Calculation of the preffered force: "
+		<< " prefForce " << prefForce
+		<< std::endl;
+		*/
+		//_velocity = prefForce;
 
 	Util::Vector repulsionForce = calcRepulsionForce(dt);
 	if (repulsionForce.x != repulsionForce.x)
@@ -808,12 +1333,15 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	Util::Vector proximityForce = calcProximityForce(dt);
 	// #define _DEBUG_ 1
 #ifdef _DEBUG_
-	std::cout << "agent" << id() << " repulsion force " << repulsionForce << std::endl;
-	std::cout << "agent" << id() << " proximity force " << proximityForce << std::endl;
-	std::cout << "agent" << id() << " pref force " << prefForce << std::endl;
+
+	if (repulsionForce.length() != 0)
+		//DBG std::cout << "agent " << id() << " repulsion force " << repulsionForce << std::endl;
+		if (proximityForce.length() != 0)
+			//DBG std::cout << "agent " << id() << " proximity force " << proximityForce << std::endl;
+			// std::cout << "agent " << id() << " pref force " << prefForce << std::endl;
+		// _velocity = _newVelocity;
 #endif
-	// _velocity = _newVelocity;
-	int alpha = 1;
+			int alpha = 1;
 	if (repulsionForce.length() > 0.0)
 	{
 		alpha = 0;
@@ -826,7 +1354,8 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	_velocity = clamp(velocity(), _SocialForcesParams.sf_max_speed);
 	_velocity.y = 0.0f;
 #ifdef _DEBUG_
-	std::cout << "agent" << id() << " speed is " << velocity().length() << std::endl;
+
+	std::cout << "agent " << id() << " speed is " << velocity().length() << "\n | velocity is: " << velocity() << std::endl;
 #endif
 	_position = position() + (velocity() * dt);
 	// A grid database update should always be done right after the new position of the agent is calculated
@@ -882,6 +1411,15 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	// _position = _position + (_velocity * dt);
 
 }
+
+
+/*
+Point avoidCollision(Point goalDirection) {
+	//find closest neigbor that is agent and try to steer the other way
+
+	return goalDirection;
+}
+*/
 
 
 void SocialForcesAgent::draw()
