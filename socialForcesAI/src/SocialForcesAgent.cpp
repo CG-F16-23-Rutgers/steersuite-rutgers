@@ -19,6 +19,8 @@
 #undef max
 
 #define AGENT_MASS 1.0f
+#define AGENT_ACC_COEF .5f
+#define IND_BEH_COEFF .5f
 
 struct SourceTargetCouple {
 	int SourceID;
@@ -1005,7 +1007,7 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	Util::Vector goalDirection;
 	goalDirection.zero();
 	Util::AutomaticFunctionProfiler profileThisFunction(&SocialForcesGlobals::gPhaseProfilers->aiProfiler);
-	
+	Vector qAcceleration, tAcceleration;
 	//DBG
 	//
 	std::cout << std::endl;
@@ -1263,6 +1265,13 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 		// throw GenericException("SocialForces numerical issue");
 	}
 	Util::Vector proximityForce = calcProximityForce(dt);
+
+	qAcceleration.zero();
+	
+	Queueing(qAcceleration);
+	tAcceleration = ((prefForce + repulsionForce + proximityForce) / MASS * AGENT_ACC_COEF) +
+		(qAcceleration* IND_BEH_COEFF);
+	
 	// #define _DEBUG_ 1
 #ifdef _DEBUG_
 
@@ -1273,12 +1282,14 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 			// std::cout << "agent " << id() << " pref force " << prefForce << std::endl;
 		// _velocity = _newVelocity;
 #endif
+
 			int alpha = 1;
 	if (repulsionForce.length() > 0.0)
 	{
 		alpha = 0;
 	}
 
+	_velocity = velocity() + tAcceleration;
 	_velocity = (prefForce)+repulsionForce + proximityForce;
 	// _velocity = (prefForce);
 	// _velocity = velocity() + repulsionForce + proximityForce;
