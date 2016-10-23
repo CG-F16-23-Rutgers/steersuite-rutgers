@@ -113,6 +113,7 @@ private:
 	// holds the location of the best local target along the midtermpath
 
 	friend class SocialForcesAIModule;
+	void SocialForcesAgent::Queueing(Util::Vector &_acceleration);
 
 	// added from A2
 	//Point avoidCollision(Point goalDirection);
