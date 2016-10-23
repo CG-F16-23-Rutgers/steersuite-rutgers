@@ -114,6 +114,10 @@ private:
 
 	friend class SocialForcesAIModule;
 	Vector SocialForcesAgent::Queueing();
+	Vector SocialForcesAgent::CollissionAvoidance();
+	bool SocialForcesAgent::lineIntersectsCircle(Point ahead, Point ahead2, Point obstacle);
+
+
 
 	// added from A2
 	//Point avoidCollision(Point goalDirection);

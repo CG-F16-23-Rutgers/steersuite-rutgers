@@ -18,9 +18,20 @@
 #undef min
 #undef max
 
+//Global Steering Coefficients
 #define AGENT_MASS 1.0f
-#define AGENT_ACC_COEF .5f
-#define IND_BEH_COEFF .5f
+#define QUEUEING_COEF 1.6f
+#define COLL_AVOID_COEF .75f
+//
+#define MAX_QUEUE_AHEAD 0.75f
+#define AHEAD_RADIUS 1.25f
+#define VELOCITY_SCALAR 0.25f
+
+//Collision Avoidance 
+#define MAX_SEE_AHEAD 3.0f
+
+
+
 
 struct SourceTargetCouple {
 	int SourceID;
@@ -279,14 +290,14 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 			ai.agentNeighbors_
 			*/
 				//tmp_agent = dynamic_cast<SocialForcesAgent*> (*neighbour);
-
+			/*
 				std::cout
 					<< "0000-getting the tagretagent: " << initialConditions.goals[i].targetName
 					<< " | targetName: " << initialConditions.goals[i].targetName
 					<< " | source.name: " << initialConditions.name
 					<< " | : " 
 					<< std::endl;
-
+					*/
 			
 			/*
 			std::cout
@@ -958,25 +969,11 @@ Util::Vector SocialForcesAgent::calcObsNormal(SteerLib::ObstacleInterface* obs)
 	return normalize(position() - obs_centre);
 }
 
-/*
-void SocialForcesAgent::computeNeighbors()
-{
-agentNeighbors_.clear();
-
-if (_SocialForcesParams.rvo_max_neighbors > 0) {
-// std::cout << "About to segfault" << std::endl;
-dynamic_cast<SocialForcesAIModule *>(rvoModule)->kdTree_->computeAgentNeighbors(this, _SocialForcesParams.rvo_neighbor_distance * _SocialForcesParams.rvo_neighbor_distance);
-// std::cout << "Made it past segfault" << std::endl;
-}
-}*/
 
 Vector SocialForcesAgent::Queueing()
 {
 
 	Vector _acceleration;  _acceleration.zero();
-	const float MAX_QUEUE_AHEAD = 1.5f;
-	const float AHEAD_RADIUS = 1.2f;
-	const float VELOCITY_SCALAR = 0.25f;
 	Vector qa;
 	Point ahead;
 
@@ -1015,6 +1012,94 @@ Vector SocialForcesAgent::Queueing()
 }
 
 
+bool SocialForcesAgent::lineIntersectsCircle(Point ahead, Point ahead2,Point obstacle) {
+	float d1, d2, d3, d4;
+	Point aheadTip, ahead2Tip;
+	Point obstacleCentre = obstacle;
+	const float obst_radius = 05.f;
+
+
+	aheadTip = position() + ahead;
+	ahead2Tip = position() + ahead2;
+	d1 = distanceBetween(obstacleCentre, aheadTip);
+	d3 = distanceBetween(obstacleCentre, ahead2Tip);
+	return (d1 <= d2 || d3 <= d2);
+}
+
+Vector SocialForcesAgent::CollissionAvoidance()
+{
+	Vector _acceleration;  _acceleration.zero();
+	Vector qa, qa2, qa3;
+	Point ahead, ahead1, ahead2;
+	AgentInterface * obstacle;
+	AgentInterface * tmp_obstacle;
+	Vector cAcceleration;
+
+	//std::cout << "1.0-Entering CollisionForces: " << std::endl;
+
+	std::set<SteerLib::SpatialDatabaseItemPtr> _neighbors;
+	getSimulationEngine()->getSpatialDatabase()->getItemsInRange(_neighbors,
+		_position.x - (this->_radius + _SocialForcesParams.sf_query_radius),
+		_position.x + (this->_radius + _SocialForcesParams.sf_query_radius),
+		_position.z - (this->_radius + _SocialForcesParams.sf_query_radius),
+		_position.z + (this->_radius + _SocialForcesParams.sf_query_radius),
+		dynamic_cast<SteerLib::SpatialDatabaseItemPtr>(this));
+	//std::cout << "2.0-Entering CollisionForces: " << std::endl;
+
+	//calculate ahead vectors
+	ahead = position() + (normalize(velocity()) * MAX_SEE_AHEAD);
+	ahead2 = position() + (normalize(velocity()) * MAX_SEE_AHEAD * 0.5);
+	//std::cout << "2.5-Entering CollisionForces: " << std::endl;
+
+	float min_distance = 1000.0f;
+	for (std::set<SteerLib::SpatialDatabaseItemPtr>::iterator neighbour = _neighbors.begin();
+		neighbour != _neighbors.end(); neighbour++)
+	{
+		if ((*neighbour)->isAgent())
+		{
+			/*
+			std::cout << "2.6-Entering CollisionForces: "
+				<< " | min_dist: " << min_distance
+				<< std::endl;
+				*/
+			tmp_obstacle = dynamic_cast<SocialForcesAgent*> (*neighbour);
+			if (distanceBetween(position(), (*tmp_obstacle).position()) < min_distance
+				&& lineIntersectsCircle(ahead, ahead2, (*tmp_obstacle).position()))
+			{
+				/*
+				std::cout << "2.7-Entering CollisionForces: "
+					<< " | min_dist: " << min_distance
+					<< std::endl;
+				*/
+				obstacle = tmp_obstacle;
+			}
+			else
+				cAcceleration.zero();
+		}
+	}// most dangerous obstacle is in obstacle object
+	if (min_distance != 1000)
+	{
+		/*
+		std::cout << "3.0-Entering CollisionForces: "
+			<< " | ahead: " << ahead
+			<< " | obst.position: " << (*obstacle).position()
+			<< std::endl;
+		*/
+		//calculate avoidance
+		cAcceleration = ahead - (*obstacle).position();
+		//std::cout << "4.0-Entering CollisionForces: " << std::endl;
+		cAcceleration = normalize(cAcceleration);
+		//std::cout << "5.0-Entering CollisionForces: " << std::endl;
+
+		return _acceleration;
+	}
+	else
+	{
+		_acceleration.zero();
+		return _acceleration;
+	}
+}
+
 
 
 void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNumber)
@@ -1022,7 +1107,7 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	Util::Vector goalDirection;
 	goalDirection.zero();
 	Util::AutomaticFunctionProfiler profileThisFunction(&SocialForcesGlobals::gPhaseProfilers->aiProfiler);
-	Vector qAcceleration, tAcceleration;
+	Vector qAcceleration, tAcceleration, cAcceleration;
 	//DBG
 	/*
 	std::cout << std::endl;
@@ -1055,10 +1140,6 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 		break;
 	case 0: //updating standard static goal
 	{
-		//DBG
-		/*
-		std::cout << "---0: Updating static goal" << std::endl;
-		*/
 		if (!_midTermPath.empty() && (!this->hasLineOfSightTo(goalInfo.targetLocation)))
 		{
 			if (reachedCurrentWaypoint())
@@ -1108,13 +1189,13 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 				Util::Color curColor;
 				std::set<AgentColorEntry>::iterator currAgentColorEntry;
 				//_currentGoal.targetName
+				/*
 				std::cout << "2.0 - checking case 2: "
 					<< " | currColor: " << _color //this is the color of the source agent
 					<< " | _currentGoal.targetName: " << _currentGoal.targetName
 					<< " | name: " << (*this).getAgentConditions(this).name
 												  //<< " | neighColor: " << (*currAgentInterface)->getAgentConditions(*currAgentInterface).color
-					<< std::endl;
-					//(*this).getAgentConditions(this).name
+					<< std::endl;*/
 					//yellow (1,1,0) is for seeking
 
 				if ( 
@@ -1124,7 +1205,6 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 					
 					)
 				{ 
-					//curColor = (*currAgentColorEntry).sourceColor;
 					Point targetPosition = tmp_agent->position();
 					Point currentAgentPosition = position();
 					//here is the seeking force
@@ -1186,24 +1266,8 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	} break; // end case3
 	}
 
-
-
-
-	// _prefVelocity = goalDirection * PERFERED_SPEED;
 	Util::Vector prefForce = (((goalDirection * PERFERED_SPEED) - velocity()) / (_SocialForcesParams.sf_acceleration / dt)); //assumption here
-	//DBG
-	/*
-	std::cout << "Calculation of the preffered force: "
-		<< " prefForce " << prefForce
-		<< " velocity " << velocity() << std::endl;
-		*/
 	prefForce = prefForce + velocity();
-	//DBG
-	/*std::cout << "2nd Calculation of the preffered force: "
-		<< " prefForce " << prefForce
-		<< std::endl;
-		*/
-		//_velocity = prefForce;
 
 	Util::Vector repulsionForce = calcRepulsionForce(dt);
 	if (repulsionForce.x != repulsionForce.x)
@@ -1216,28 +1280,14 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 
 	qAcceleration.zero();
 	
-	//start DBG sequence
-	std::cout		<< std::endl;
-
-	std::cout
-		<< "--Q0 - before qaccel calculation: qaccel" << qAcceleration
-		<< " | taccel: " << tAcceleration
-		<< std::endl;
-
-	qAcceleration = Queueing();
-
-	std::cout 
-		<< "--Q5 - before accel addition: qaccel" << qAcceleration 
-		<< " | taccel: " << tAcceleration
-		<< std::endl;
-
-	tAcceleration = ((prefForce + repulsionForce + proximityForce+ (qAcceleration* IND_BEH_COEFF)) / (MASS * AGENT_ACC_COEF));
+	//qAcceleration = Queueing();
+	//tAcceleration = ((prefForce + repulsionForce + proximityForce+ (qAcceleration* IND_BEH_COEFF)) / (MASS * AGENT_ACC_COEF));
 		//+ (qAcceleration* IND_BEH_COEFF);
-	std::cout
+	/*std::cout
 		<< "--Q6 - after accel addition: qaccel" << qAcceleration
 		<< " | taccel: " << tAcceleration
 		<< std::endl;
-
+		*/
 	// #define _DEBUG_ 1
 #ifdef _DEBUG_
 
@@ -1254,22 +1304,25 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 	{
 		alpha = 0;
 	}
-
+	/*
 	std::cout 
 		<< "--Q7:_velocity" << _velocity 
 		<< " | _velocity()" << velocity()
 		<< " | tAcceleration" << tAcceleration
 		<< std::endl;
-
+	*/
 	//add steering 
 	_velocity = velocity() + tAcceleration;
-
+	/*
 	std::cout
 		<< "--Q8:_velocity" << _velocity
 		<< std::endl;
-
+	*/
 	//adding Queue steering to the velocity vector
-	_velocity = (prefForce)+repulsionForce + proximityForce +qAcceleration;
+	cAcceleration = CollissionAvoidance();
+
+	_velocity = (prefForce)+repulsionForce + proximityForce + 
+		(qAcceleration*QUEUEING_COEF) + (cAcceleration*COLL_AVOID_COEF);
 	// _velocity = (prefForce);
 	// _velocity = velocity() + repulsionForce + proximityForce;
 
@@ -1335,13 +1388,6 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 }
 
 
-/*
-Point avoidCollision(Point goalDirection) {
-	//find closest neigbor that is agent and try to steer the other way
-
-	return goalDirection;
-}
-*/
 
 
 void SocialForcesAgent::draw()
