@@ -1242,10 +1242,10 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 		{
 			Util::Color curColor;
 			std::set<AgentColorEntry>::iterator currAgentColorEntry;
-
+			/*
 			std::cout << "3.0 - checking case 3: "
 				<< " | currColor: " << _color
-				<< std::endl;
+				<< std::endl;*/
 			//grey (.3,.3,.3) is for avoiding
 			if (
 				_color.r == gGray30.r &&
@@ -1280,7 +1280,7 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 
 	qAcceleration.zero();
 	
-	//qAcceleration = Queueing();
+	qAcceleration = Queueing();
 	//tAcceleration = ((prefForce + repulsionForce + proximityForce+ (qAcceleration* IND_BEH_COEFF)) / (MASS * AGENT_ACC_COEF));
 		//+ (qAcceleration* IND_BEH_COEFF);
 	/*std::cout
