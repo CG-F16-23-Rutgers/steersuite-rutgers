@@ -28,6 +28,7 @@ using namespace Util;
 int main(int argc, char **argv)
 {
 	// save the original cerr streambuf, so that we can restore it on an exception.
+	//cout << "-Main()-Entering-Main.cpp/main" << endl;
 	std::streambuf * cerrOriginalStreambuf = std::cerr.rdbuf();
 
 	std::ofstream coutRedirection;
@@ -37,6 +38,7 @@ int main(int argc, char **argv)
 	try {
 
 		SimulationOptions simulationOptions;
+		//cout << "-Main()-Calling initializeOptionsFromCommandLine()" << endl;
 		initializeOptionsFromCommandLine( argc, argv, simulationOptions );
 
 
@@ -64,8 +66,13 @@ int main(int argc, char **argv)
 		//
 		// allocate and use the engine driver
 		//
+		cout << "engineDriver:" << simulationOptions.globalOptions.engineDriver  << endl;
+
+		//cout << "-Main()--Before selector for engineDriver" << endl;
+
 		if (simulationOptions.globalOptions.engineDriver == "commandline") {
 			CommandLineEngineDriver * cmd = new CommandLineEngineDriver();
+
 			cmd->init(&simulationOptions);
 			cmd->run();
 			cmd->finish();
@@ -73,9 +80,16 @@ int main(int argc, char **argv)
 		else if (simulationOptions.globalOptions.engineDriver == "glfw") {
 #ifdef ENABLE_GUI
 #ifdef ENABLE_GLFW
+
 			GLFWEngineDriver * driver = GLFWEngineDriver::getInstance();
+
+			//cout << "-Main()--Before Calling init() ay GLFWEngineDriver()" << endl;
 			driver->init(&simulationOptions);
+
+			//cout << "-Main()--Before Calling run() at GLFWEngineDriver()" << endl;
 			driver->run();
+
+			//cout << "-Main()--Before Calling finish() at GLFWEngineDriver()" << endl;
 			driver->finish();
 #else
 			throw GenericException("GLFW functionality is not compiled into this version of SteerSim.");
@@ -88,6 +102,7 @@ int main(int argc, char **argv)
 #ifdef ENABLE_GUI
 #ifdef ENABLE_QT
 			SteerSimQt::QtEngineDriver * driver = SteerSimQt::QtEngineDriver::getInstance();
+
 			driver->init(options);
 			driver->run();
 			driver->finish();
@@ -121,6 +136,7 @@ int main(int argc, char **argv)
 	if (cerrRedirection.is_open()) cerrRedirection.close();
 	if (clogRedirection.is_open()) clogRedirection.close();
 
+	//cout << "-Main()-Exiting" << endl;
 	return EXIT_SUCCESS;
 }
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="collisionAI">
+      <UniqueIdentifier>{D25EBCE2-1C24-9847-9BE1-2ED52BA7C67D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collisionAI\include">
+      <UniqueIdentifier>{AC7275CE-FF49-AB48-9D2F-E6ED3348E2A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collisionAI\src">
+      <UniqueIdentifier>{04816693-147A-8243-8053-0AF46090B5B2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\collisionAI\include\CollisionAgent.h">
+      <Filter>collisionAI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\collisionAI\include\CollisionAIModule.h">
+      <Filter>collisionAI\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\collisionAI\src\CollisionAgent.cpp">
+      <Filter>collisionAI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\collisionAI\src\CollisionAIModule.cpp">
+      <Filter>collisionAI\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

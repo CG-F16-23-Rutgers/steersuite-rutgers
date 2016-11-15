@@ -370,6 +370,8 @@ void SimulationEngine::finish()
 
 void SimulationEngine::initializeSimulation()
 {
+	//cout << "---SimulationEngine::initializeSimulation() - Entering - *** " << endl;
+
 	if (_modulesInExecutionOrder.size() == 0) {
 		throw GenericException("There are no modules loaded.\nPlease specify modules from the command line, config file, or user interface.");
 	}
@@ -386,6 +388,7 @@ void SimulationEngine::initializeSimulation()
 
 	_engineState.transitionToState(ENGINE_STATE_SIMULATION_LOADED);
 	_camera.animateCamera = _options->guiOptions.animateCamera;
+	//cout << "---SimulationEngine::initializeSimulation() - Exiting" << endl;
 }
 
 //========================================
@@ -411,20 +414,20 @@ void SimulationEngine::preprocessSimulation()
 	_engineState.transitionToState(ENGINE_STATE_PREPROCESSING_SIMULATION);
 
 	std::vector<SteerLib::ModuleInterface*>::iterator iter;
-
+	// reset the agents - old 3 - new 1
+	for (size_t a = 0; a < _agentInitialConditions.size(); a++)
+	{
+		if (!_agents.at(a)->enabled())
+		{
+			_agents.at(a)->reset(_agentInitialConditions.at(a), this);
+		}
+	}
+	// old 1 - new 2
 	for ( iter = _modulesInExecutionOrder.begin(); iter != _modulesInExecutionOrder.end();  ++iter ) {
 		(*iter)->preprocessSimulation();
 	}
-
+	// old 2 - new 3
 	this->_pathPlanner->refresh();
-	// reset the agents
-	for (size_t a=0; a < _agentInitialConditions.size(); a++)
-	{
-		if ( !_agents.at(a)->enabled() )
-		{
-			_agents.at(a)->reset(_agentInitialConditions.at(a),this);
-		}
-	}
 	// _agentInitialConditions.clear();
 
 	_engineState.transitionToState(ENGINE_STATE_SIMULATION_READY_FOR_UPDATE);

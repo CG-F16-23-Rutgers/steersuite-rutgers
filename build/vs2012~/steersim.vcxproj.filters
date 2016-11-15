@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="steersim">
+      <UniqueIdentifier>{E3D5818B-DB7C-1E4B-BBAB-AC5357857218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="steersim\src">
+      <UniqueIdentifier>{F8052B90-A7E7-EC42-884B-448C98C902FF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\steersim\src\Main.cpp">
+      <Filter>steersim\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

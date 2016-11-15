@@ -14,6 +14,9 @@
 #include <map>
 #include "SteerLib.h"
 
+#include <unordered_map>
+
+
 namespace SteerLib
 {
 
@@ -56,9 +59,17 @@ namespace SteerLib
 
 	};
 
+	//class AStarPlanningState : public SteerLib::BestFirstSearchPlanner
 	
+	class AStarAction : public SteerLib::DefaultAction<int> {
 
-	class STEERLIB_API AStarPlanner{
+	};
+
+	class STEERLIB_API AStarPlanner 
+		//: public SteerLib::BestFirstSearchPlanner<PlanningDomain, 
+		//PlanningState, 
+		//SteerLib:: PlanningAction = DefaultAction<PlanningState> >
+	{
 		public:
 			AStarPlanner();
 			~AStarPlanner();
@@ -98,8 +109,66 @@ namespace SteerLib
 			bool computePath(std::vector<Util::Point>& agent_path, Util::Point start, Util::Point goal, SteerLib::SpatialDataBaseInterface * _gSpatialDatabase, bool append_to_path = false);
 		private:
 			SteerLib::SpatialDataBaseInterface * gSpatialDatabase;
-	};
+			// A#4 Added
+			// SearchNode definition
+			struct SearchNode {
+				int agent_index = 0;
+				int parent_agent_index = 0;
+				double f = 0;
+				double g = 0;
+				double h = 0;
+				bool operator<(const SearchNode& rhs) const
+				{
+					if (f < rhs.f)
+						return true;
+					else if (f == rhs.f)
+					{
+						if (g < rhs.g)
+							return true;
+					}
+					return false;
+				}
+				bool operator>(const SearchNode& rhs) const
+				{
+					if (f > rhs.f)
+						return true;
+					else if (f == rhs.f)
+					{
+						if (g > rhs.g)
+							return true;
+					}
+					return false;
+				}
+			};
 
+			typedef std::priority_queue<SearchNode, std::vector<SearchNode>, std::greater<SearchNode>> searchnode_priority_queue;
+
+			typedef std::unordered_map<int, int> iumap;
+			void AStarPlanner::print_came_from(const iumap& came_from);
+
+			bool AStarPlanner::reconstruct_path(SpatialDataBaseInterface * _gSpatialDatabase,
+					std::vector<Util::Point>& agent_path, const std::unordered_map<int, int>& came_from, const int& start_cell_idx, const int& goal_cell_idx, searchnode_priority_queue& closedSet);
+
+			bool AStarPlanner::neighbour_in_openset(SearchNode& neighbour_node, searchnode_priority_queue& openSet);
+			bool AStarPlanner::neighbour_in_closedset(SearchNode& neighbour_node, searchnode_priority_queue& closedSet);
+			void AStarPlanner::move_neighbor_from_closed_to_openSet(SearchNode& neighbour_node,
+				searchnode_priority_queue& closedSet, searchnode_priority_queue& openSet);
+			void AStarPlanner::print_openSet(searchnode_priority_queue& openSet, SpatialDataBaseInterface * _gSpatialDatabase);
+
+			void AStarPlanner::prune_openSet_closed(searchnode_priority_queue& openSet, SearchNode current_closed_node);
+
+			void AStarPlanner::prune_openSet(searchnode_priority_queue& openSet, SearchNode current_node);
+
+			void AStarPlanner::print_closedSet(searchnode_priority_queue& closedSet, SpatialDataBaseInterface * _gSpatialDatabase);
+
+			bool AStarPlanner::weightedAStar(SpatialDataBaseInterface * _gSpatialDatabase, std::vector<Util::Point>& agent_path, Util::Point &start, Util::Point &goal,
+				double heuristics_type, double epsilon, AStarPlanner * planner);
+
+			double AStarPlanner::calculate_h(Util::Point& _start, Util::Point& _goal,
+				const double& type, SpatialDataBaseInterface * _gSpatialDatabase);
+
+			double AStarPlanner::calculate_f(Util::Point& start, Util::Point& goal, double g_val, double& euristic_type, double& epsilon, SpatialDataBaseInterface * _gSpatialDatabase);
+	};
 
 }
 

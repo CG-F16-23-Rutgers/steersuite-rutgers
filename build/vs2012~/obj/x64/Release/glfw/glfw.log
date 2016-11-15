@@ -1,0 +1,38 @@
+﻿  enable.c
+  fullscreen.c
+  glext.c
+  image.c
+  init.c
+  input.c
+  joystick.c
+  stream.c
+  tga.c
+  thread.c
+  time.c
+  window.c
+..\..\external\glfw\lib\window.c(580): warning C4055: 'type cast': from data pointer 'void *' to function pointer 'PFNGLGETSTRINGIPROC'
+  win32_dllmain.c
+..\..\external\glfw\lib\win32\win32_dllmain.c(40): warning C4100: 'reserved': unreferenced formal parameter
+..\..\external\glfw\lib\win32\win32_dllmain.c(40): warning C4100: 'reason': unreferenced formal parameter
+..\..\external\glfw\lib\win32\win32_dllmain.c(40): warning C4100: 'instance': unreferenced formal parameter
+  win32_enable.c
+  win32_fullscreen.c
+  win32_glext.c
+..\..\external\glfw\lib\win32\win32_glext.c(80): warning C4054: 'type cast': from function pointer 'PROC' to data pointer 'void *'
+  win32_init.c
+..\..\external\glfw\lib\win32\win32_init.c(237): warning C4996: 'GetVersionExA': was declared deprecated
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\sysinfoapi.h(433): note: see declaration of 'GetVersionExA'
+  win32_joystick.c
+  win32_thread.c
+  win32_time.c
+  Generating Code...
+c:\gitrepos\steersuite-rutgers-23\external\glfw\lib\win32\win32_fullscreen.c(281): warning C4701: potentially uninitialized local variable 'm2' used
+c:\gitrepos\steersuite-rutgers-23\external\glfw\lib\image.c(620): warning C4701: potentially uninitialized local variable 'GenMipMap' used
+  Compiling...
+  win32_window.c
+..\..\external\glfw\lib\win32\win32_window.c(1306): warning C4100: 'height': unreferenced formal parameter
+..\..\external\glfw\lib\win32\win32_window.c(1306): warning C4100: 'width': unreferenced formal parameter
+  Generating Code...
+     Creating library ..\bin\glfw.lib and object ..\bin\glfw.exp
+  glfw.vcxproj -> C:\gitrepos\steersuite-rutgers-23\build\vs2012\..\bin\glfw.dll
+  glfw.vcxproj -> ..\bin\glfw.pdb (Full PDB)

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="external">
+      <UniqueIdentifier>{50974E80-A166-CA41-B606-3F95DE072851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\recastnavigation">
+      <UniqueIdentifier>{31B7962D-D513-0A4E-87D4-AC764A8818BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\recastnavigation\Detour">
+      <UniqueIdentifier>{22AA3624-4736-6A43-AA43-9D34CD97622D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\recastnavigation\Detour\Include">
+      <UniqueIdentifier>{97F3C538-0631-6E47-904E-05AAFC0F813F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\recastnavigation\Detour\Source">
+      <UniqueIdentifier>{4946D0E4-DB55-B342-B75A-6474E590D4C8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourAlloc.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourAssert.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourCommon.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourMath.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourNavMesh.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourNavMeshBuilder.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourNavMeshQuery.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourNode.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\recastnavigation\Detour\Include\DetourStatus.h">
+      <Filter>external\recastnavigation\Detour\Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\external\recastnavigation\Detour\Source\DetourAlloc.cpp">
+      <Filter>external\recastnavigation\Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\recastnavigation\Detour\Source\DetourCommon.cpp">
+      <Filter>external\recastnavigation\Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\recastnavigation\Detour\Source\DetourNavMesh.cpp">
+      <Filter>external\recastnavigation\Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\recastnavigation\Detour\Source\DetourNavMeshBuilder.cpp">
+      <Filter>external\recastnavigation\Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\recastnavigation\Detour\Source\DetourNavMeshQuery.cpp">
+      <Filter>external\recastnavigation\Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\recastnavigation\Detour\Source\DetourNode.cpp">
+      <Filter>external\recastnavigation\Detour\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -95,6 +95,8 @@ GLFWEngineDriver::GLFWEngineDriver()
 //
 void GLFWEngineDriver::init(SimulationOptions * options)
 {
+	//cout << "--GLFWEngineDriver::init(SimulationOptions * options) - Entering" << endl;
+
 	if (_alreadyInitialized) {
 		throw GenericException("GLFWEngineDriver::init() was called twice, but it should only be called once.");
 	}
@@ -129,6 +131,8 @@ void GLFWEngineDriver::init(SimulationOptions * options)
 	_initGL(); // calls _engine->initGL() among other things...
 
 	DrawLib::init();
+	//cout << "--GLFWEngineDriver::init(SimulationOptions * options) - Exiting" << endl;
+
 }
 
 void GLFWEngineDriver::finish()
@@ -262,6 +266,7 @@ void GLFWEngineDriver::_initGL()
 void GLFWEngineDriver::run()
 {
 	bool verbose = true;  // TODO: make this a user option ??.
+	//cout << "--GLFWEngineDriver::run() at GLFWEngineDriver.cpp - Entering" << endl;
 
 	if (verbose) std::cout << "\rInitializing...\n";
 	_engine->initializeSimulation();
@@ -281,6 +286,8 @@ void GLFWEngineDriver::run()
 		}
 
 		// Update the AI.
+		//cout << "--GLFWEngineDriver::run() - about to update the AI" << endl;
+		
 		if (_engine->update(_paused) == false) {
 			// The engine indicated the simulaton should finish
 			_done = true;
