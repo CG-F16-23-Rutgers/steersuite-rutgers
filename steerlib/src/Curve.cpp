@@ -45,7 +45,7 @@ void Curve::drawCurve(Color curveColor, float curveThickness, int window)
 {
 #ifdef ENABLE_GUI
 
-	
+
 	Point firstPoint, secondPoint;
 
 	float startTime = controlPoints[0].time,
@@ -59,23 +59,23 @@ void Curve::drawCurve(Color curveColor, float curveThickness, int window)
 	float maxtime = controlPoints[maxPointIndex].time;
 
 	float fineWindow;
-	if (window = 5) 
+	if (window = 5)
 		fineWindow = 2;
 	else fineWindow = 1;
 
-		for (int timeCounter = startTime; timeCounter < endTime; timeCounter = timeCounter + fineWindow)
-		{
-			if (calculatePoint(firstPoint, timeCounter) &&
-				calculatePoint(secondPoint, timeCounter + fineWindow)
-				) {
+	for (int timeCounter = startTime; timeCounter < endTime; timeCounter = timeCounter + fineWindow)
+	{
+		if (calculatePoint(firstPoint, timeCounter) &&
+			calculatePoint(secondPoint, timeCounter + fineWindow)
+			) {
 
-				DrawLib::drawLine(firstPoint, secondPoint, curveColor, curveThickness);
+			DrawLib::drawLine(firstPoint, secondPoint, curveColor, curveThickness);
 
-			}
-			else {
-			}
 		}
-	
+		else {
+		}
+	}
+
 
 	// Robustness: make sure there is at least two control point: start and end points
 	// Move on the curve from t=0 to t=finalPoint, using window as step size, and linearly interpolate the curve points
@@ -99,7 +99,7 @@ void Curve::sortControlPoints()
 	/*DEBUG
 	for (int y = 0; y < controlPoints.size(); y++)
 	{
-		std::cout << "ControlPoint index: " << y << ";ControlPoint time value: " << controlPoints[y].time << std::endl;
+	std::cout << "ControlPoint index: " << y << ";ControlPoint time value: " << controlPoints[y].time << std::endl;
 	}
 	*/
 
@@ -107,8 +107,8 @@ void Curve::sortControlPoints()
 	std::sort(controlPoints.begin(), controlPoints.end(), timeCompare());
 
 	//remove extra control point with same time stamps
-	
-	for (int i = 1; i < cpSize-1; i++) {
+
+	for (int i = 1; i < cpSize - 1; i++) {
 		if (controlPoints[i - 1].time == controlPoints[i].time) {
 			controlPoints[i].position.x = controlPoints[i - 1].position.x;
 			controlPoints[i].position.y = controlPoints[i - 1].position.y;
@@ -118,18 +118,18 @@ void Curve::sortControlPoints()
 			controlPoints[i].tangent.z = controlPoints[i - 1].tangent.z;
 		}
 	}
-	
+
 
 	//Post order check
 	/*
 	for (int y = 0; y < controlPoints.size(); y++)
 	{
-		//DEBUG
-		Point currPos = controlPoints[y].position;
-		float currTime = controlPoints[y].time;
-		std::cout << "ControlPoint index: " << y << ";ControlPoint time value: "
-			<< currTime << " (" << currPos.x << "," << currPos.y << "," << currPos.z << ")"
-			<< std::endl;
+	//DEBUG
+	Point currPos = controlPoints[y].position;
+	float currTime = controlPoints[y].time;
+	std::cout << "ControlPoint index: " << y << ";ControlPoint time value: "
+	<< currTime << " (" << currPos.x << "," << currPos.y << "," << currPos.z << ")"
+	<< std::endl;
 	}*/
 
 	return;
@@ -186,7 +186,7 @@ bool Curve::checkRobust()
 
 
 	//check no to go over the time
-	
+
 
 	//verify no two consecutive points with same time - remming for now even though it is a problem
 	//or is it OK?
@@ -205,7 +205,7 @@ bool Curve::findTimeInterval(unsigned int& nextPoint, float time)
 
 	//vector element counter
 	int i = 0;
-	float maxtime = controlPoints.at(controlPoints.size()-1).time;
+	float maxtime = controlPoints.at(controlPoints.size() - 1).time;
 	if (time > maxtime) {
 		return false;
 	}
@@ -214,13 +214,13 @@ bool Curve::findTimeInterval(unsigned int& nextPoint, float time)
 
 	//Iterate over the controlPoints vector to locate item with time
 	for (pointIterator = controlPoints.begin(); pointIterator < controlPoints.end(); pointIterator++, i++) {
-		
-		if (controlPoints[i].time <= time && time <= controlPoints[i+1].time)  {
+
+		if (controlPoints[i].time <= time && time <= controlPoints[i + 1].time) {
 			//returning the index of the next point on the curve
-			nextPoint = i+1;
+			nextPoint = i + 1;
 			return true;
 		}
-		
+
 	}
 
 	exit(0);
@@ -243,39 +243,39 @@ Point Curve::useHermiteCurve(const unsigned int nextPoint, const float time)
 
 	newPosition =
 		(
-			(
-				(2 * pow(normalTime, 3))
-				- (3 * pow(normalTime, 2))
-				+ 1
+		(
+			(2 * pow(normalTime, 3))
+			- (3 * pow(normalTime, 2))
+			+ 1
 			)
 			*
 			(controlPoints.at(nextPoint - 1).position)
-		) +
-		(
+			) +
 			(
+		(
 				(pow(normalTime, 3))
-				- (2 * pow(normalTime, 2))
-				+ normalTime
+			- (2 * pow(normalTime, 2))
+			+ normalTime
 			)
-			*
-			((controlPoints.at(nextPoint - 1).tangent)*(intervalTime))
-		) +
+				*
+				((controlPoints.at(nextPoint - 1).tangent)*(intervalTime))
+				) +
+				(
 		(
-			(
-				(-2 * pow(normalTime, 3))
-				+ (3 * pow(normalTime, 2))
+					(-2 * pow(normalTime, 3))
+			+ (3 * pow(normalTime, 2))
 			)
-			*
-			(controlPoints.at(nextPoint).position)
-		) +
+					*
+					(controlPoints.at(nextPoint).position)
+					) +
+					(
 		(
-			(
-				(pow(normalTime, 3))
-				- (pow(normalTime, 2))
+						(pow(normalTime, 3))
+			- (pow(normalTime, 2))
 			)
-			*
-			((controlPoints.at(nextPoint).tangent)*(intervalTime))
-		);
+						*
+						((controlPoints.at(nextPoint).tangent)*(intervalTime))
+						);
 
 
 	// Calculate position at t = time on Hermite curve
@@ -296,20 +296,20 @@ Point Curve::useCatmullCurve(const unsigned int nextPoint, const float time)
 	float maxtime = controlPoints[maxPointIndex].time;
 	Point tangent0, tangent1, tangent2, tangent3;
 
-	Point 	
+	Point
 		p0 = controlPoints[(nextPoint - 2 + cpSize) % cpSize].position,
 		p1 = controlPoints[(nextPoint - 1 + cpSize) % cpSize].position,
 		p2 = controlPoints[nextPoint].position,
 		p3 = controlPoints[(nextPoint - 1 + cpSize) % cpSize].position;
 
 	float	t0 = controlPoints[(nextPoint - 2 + cpSize) % cpSize].time,
-			t1 = controlPoints[(nextPoint - 1 + cpSize) % cpSize].time,
-			t2 = controlPoints[nextPoint].time,
-			t3 = controlPoints[(nextPoint + 1 + cpSize) % cpSize].time,
-		dt = t2-t1;
+		t1 = controlPoints[(nextPoint - 1 + cpSize) % cpSize].time,
+		t2 = controlPoints[nextPoint].time,
+		t3 = controlPoints[(nextPoint + 1 + cpSize) % cpSize].time,
+		dt = t2 - t1;
 
-	
- 
+
+
 	//we are at the last point 
 	if (nextPoint == maxPointIndex)
 		p3 = controlPoints[0].position;
@@ -317,9 +317,9 @@ Point Curve::useCatmullCurve(const unsigned int nextPoint, const float time)
 	//we are at the first point
 	if (nextPoint == 1)
 		p0 = controlPoints[maxPointIndex].position;
-	
 
-	
+
+
 	//normalize time
 	float normalTime, intervalTime;
 
@@ -328,28 +328,28 @@ Point Curve::useCatmullCurve(const unsigned int nextPoint, const float time)
 
 	//check if we are in 
 	//we are either in first or last curve
-	
-		newPosition.x = 0.5*(
-			(2 * p1.x) +
-			((p2.x - p0.x)*normalTime) +
-			(((2 * p0.x) - (5 * p1.x) + (p2.x * 4) - p3.x)*normalTime*normalTime) +
-			((-1 * p0.x + 3 * p1.x - 3 * p2.x + p3.x)*normalTime*normalTime*normalTime));
 
-		newPosition.y = 0.5*(
-			(2 * p1.y) +
-			((p2.y - p0.y)*normalTime) +
-			(((2 * p0.y) - (5 * p1.y) + (p2.y * 4) - p3.y)*normalTime*normalTime) +
-			((-1 * p0.y + 3 * p1.y - 3 * p2.y + p3.y)*normalTime*normalTime*normalTime));
+	newPosition.x = 0.5*(
+		(2 * p1.x) +
+		((p2.x - p0.x)*normalTime) +
+		(((2 * p0.x) - (5 * p1.x) + (p2.x * 4) - p3.x)*normalTime*normalTime) +
+		((-1 * p0.x + 3 * p1.x - 3 * p2.x + p3.x)*normalTime*normalTime*normalTime));
 
-		newPosition.z = 0.5*(
-			(2 * p1.z) +
-			((p2.z - p0.z)*normalTime) +
-			(((2 * p0.z) - (5 * p1.z) + (p2.z * 4) - p3.z)*normalTime*normalTime) +
-			((-1 * p0.z + 3 * p1.z - 3 * p2.z + p3.z)*normalTime*normalTime*normalTime));
-	
+	newPosition.y = 0.5*(
+		(2 * p1.y) +
+		((p2.y - p0.y)*normalTime) +
+		(((2 * p0.y) - (5 * p1.y) + (p2.y * 4) - p3.y)*normalTime*normalTime) +
+		((-1 * p0.y + 3 * p1.y - 3 * p2.y + p3.y)*normalTime*normalTime*normalTime));
+
+	newPosition.z = 0.5*(
+		(2 * p1.z) +
+		((p2.z - p0.z)*normalTime) +
+		(((2 * p0.z) - (5 * p1.z) + (p2.z * 4) - p3.z)*normalTime*normalTime) +
+		((-1 * p0.z + 3 * p1.z - 3 * p2.z + p3.z)*normalTime*normalTime*normalTime));
+
 	// Calculate position at t = time on Catmull-Rom curve
 
 	// Return result
 
-return newPosition;
+	return newPosition;
 }
