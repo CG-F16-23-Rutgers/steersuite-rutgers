@@ -250,6 +250,8 @@ void initializeOptionsFromCommandLine( int argc, char **argv, SimulationOptions 
 	//
 	//   - if the user requested to list modules, print them out and exit.
 	//
+	//cout << "--initializeOptionsFromCommandLine()-Entering--SteerSim.cpp/initializeOptionsFromCommandLine " << endl;
+
 	std::string inputConfigFileName = "";
 	bool listModulesAndExit = false;
 	CommandLineParser specialOpts;
@@ -499,6 +501,7 @@ void initializeOptionsFromCommandLine( int argc, char **argv, SimulationOptions 
 
 
 
+	//cout << "--initializeOptionsFromCommandLine()-Exiting" << endl;
 
 	// If user requested to store a config file, do that and exit.
 	if (generateConfigFilename != "") {

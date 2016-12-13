@@ -215,8 +215,9 @@ void TestCaseWriter::writeTestCaseToFile(FILE *fp,
 			fprintf(fp,"\t\t\t<desiredSpeed>%f</desiredSpeed>\n", agents[i].goals[g].desiredSpeed) ;
 			fprintf(fp,"\t\t\t<timeDuration>%f</timeDuration>\n",  agents[i].goals[g].timeDuration) ;
 
-			//if ( !goal->targetName.empty() )
+			//!!!if ( !goal->targetName.empty() )
 			//	fprintf(fp,"\t\t\t<targetName>%s</targetName>\n", goal->targetName.c_str()) ;
+
 
 			fprintf(fp,"\t\t\t<targetDirection> <x>%f</x> <y>%f</y> <z>%f</z> </targetDirection>\n",
 			agents[i].goals[g].targetDirection[0],agents[i].goals[g].targetDirection[1],agents[i].goals[g].targetDirection[2]) ;

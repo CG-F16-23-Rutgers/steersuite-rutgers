@@ -1,0 +1,173 @@
+﻿  LogObject.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(24): warning C4251: 'DataItem::string': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'DataItem'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): warning C4251: 'LogObject::_record': class 'std::vector<DataItem,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'LogObject'
+          with
+          [
+              _Ty=DataItem
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): note: see declaration of 'std::vector<DataItem,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataItem
+          ]
+  LogManager.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(24): warning C4251: 'DataItem::string': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'DataItem'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): warning C4251: 'LogObject::_record': class 'std::vector<DataItem,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'LogObject'
+          with
+          [
+              _Ty=DataItem
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): note: see declaration of 'std::vector<DataItem,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataItem
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(65): warning C4251: 'Logger::_fileStream': class 'std::basic_fstream<char,std::char_traits<char>>' needs to have dll-interface to be used by clients of class 'Logger'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\iosfwd(692): note: see declaration of 'std::basic_fstream<char,std::char_traits<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(66): warning C4251: 'Logger::_fileName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Logger'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(69): warning C4251: 'Logger::_fieldNames': class 'std::vector<std::string,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Logger'
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\utilglobals.h(25): note: see declaration of 'std::vector<std::string,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=std::string
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(70): warning C4251: 'Logger::_dataTypes': class 'std::vector<DataType,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Logger'
+          with
+          [
+              _Ty=DataType
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(70): note: see declaration of 'std::vector<DataType,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataType
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logmanager.h(36): warning C4251: 'LogManager::_loggers': class 'std::map<std::string,Logger *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' needs to have dll-interface to be used by clients of class 'LogManager'
+          with
+          [
+              _Kty=std::string,
+              _Ty=Logger *
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logmanager.h(36): note: see declaration of 'std::map<std::string,Logger *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+          with
+          [
+              _Kty=std::string,
+              _Ty=Logger *
+          ]
+  Logger.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(24): warning C4251: 'DataItem::string': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'DataItem'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): warning C4251: 'LogObject::_record': class 'std::vector<DataItem,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'LogObject'
+          with
+          [
+              _Ty=DataItem
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): note: see declaration of 'std::vector<DataItem,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataItem
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(65): warning C4251: 'Logger::_fileStream': class 'std::basic_fstream<char,std::char_traits<char>>' needs to have dll-interface to be used by clients of class 'Logger'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\iosfwd(692): note: see declaration of 'std::basic_fstream<char,std::char_traits<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(66): warning C4251: 'Logger::_fileName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Logger'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(69): warning C4251: 'Logger::_fieldNames': class 'std::vector<std::string,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Logger'
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\utilglobals.h(25): note: see declaration of 'std::vector<std::string,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=std::string
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(70): warning C4251: 'Logger::_dataTypes': class 'std::vector<DataType,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Logger'
+          with
+          [
+              _Ty=DataType
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(70): note: see declaration of 'std::vector<DataType,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataType
+          ]
+  LogData.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(24): warning C4251: 'DataItem::string': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'DataItem'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): warning C4251: 'LogObject::_record': class 'std::vector<DataItem,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'LogObject'
+          with
+          [
+              _Ty=DataItem
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logobject.h(96): note: see declaration of 'std::vector<DataItem,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataItem
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(65): warning C4251: 'Logger::_fileStream': class 'std::basic_fstream<char,std::char_traits<char>>' needs to have dll-interface to be used by clients of class 'Logger'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\iosfwd(692): note: see declaration of 'std::basic_fstream<char,std::char_traits<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(66): warning C4251: 'Logger::_fileName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Logger'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(69): warning C4251: 'Logger::_fieldNames': class 'std::vector<std::string,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Logger'
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\utilglobals.h(25): note: see declaration of 'std::vector<std::string,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=std::string
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(70): warning C4251: 'Logger::_dataTypes': class 'std::vector<DataType,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Logger'
+          with
+          [
+              _Ty=DataType
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logger.h(70): note: see declaration of 'std::vector<DataType,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=DataType
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\include\logdata.h(34): warning C4251: 'LogData::logData': class 'std::vector<LogObject *,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'LogData'
+          with
+          [
+              _Ty=LogObject *
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\logdata.h(26): note: see declaration of 'std::vector<LogObject *,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=LogObject *
+          ]
+c:\gitrepos\steersuite-rutgers-23\util\src\logdata.cpp(33): warning C4458: declaration of 'log' hides class member
+  c:\gitrepos\steersuite-rutgers-23\util\include\logdata.h(33): note: see declaration of 'LogData::log'
+c:\gitrepos\steersuite-rutgers-23\util\src\logdata.cpp(41): warning C4458: declaration of 'logData' hides class member
+  c:\gitrepos\steersuite-rutgers-23\util\include\logdata.h(34): note: see declaration of 'LogData::logData'
+  AStarLiteOpen.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  AStarLiteNode.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  AStarLiteClose.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  AStarLite.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\util\include\astar\astarlite.h(34): warning C4251: 'AStarLite::m_path': class 'std::vector<int,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'AStarLite'
+          with
+          [
+              _Ty=int
+          ]
+  c:\gitrepos\steersuite-rutgers-23\util\include\astar\astarliteclose.h(28): note: see declaration of 'std::vector<int,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=int
+          ]
+  Generating Code...

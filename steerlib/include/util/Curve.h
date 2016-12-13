@@ -36,13 +36,14 @@ namespace Util {
 	{
 	public:
 		CurvePoint(Point inputPosition, Vector& inputTangent, float inputTime) : position(inputPosition),
-																tangent(inputTangent), time(inputTime) {}
+			tangent(inputTangent), time(inputTime) {}
 		Point position;
 		Vector tangent;
 		float time;
 	};
 
-	/* Class for implementing an animation curve. From within any module, class or function, a Curve object can be created.
+
+ 	/* Class for implementing an animation curve. From within any module, class or function, a Curve object can be created.
 	** Control points must be passed to this class as CurvePoint objects (one by one, or together in a vector).
 	** Any animatable parameter setpoints, can be used to create a vector of CurvePoints and then used to instantiate a Curve object.
 	** Curve object, after instantiation, is completely independant and can be used separatly.

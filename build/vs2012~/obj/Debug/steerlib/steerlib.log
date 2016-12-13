@@ -1,0 +1,342 @@
+﻿  tinyxmlparser.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  tinyxmlerror.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  tinyxml.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  tinystr.cpp
+  ticpp.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  XMLParser.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  ThreadedTaskManager.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\threadedtaskmanager.cpp(287): warning C4996: 'GetVersionExA': was declared deprecated
+  c:\program files (x86)\windows kits\8.1\include\um\sysinfoapi.h(433): note: see declaration of 'GetVersionExA'
+  TestCaseWriter.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(37): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(56): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(75): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(239): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(398): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(481): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasewriter.cpp(579): warning C4018: '<': signed/unsigned mismatch
+  TestCaseReaderPrivate.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcasereaderprivate.cpp(783): warning C4018: '<': signed/unsigned mismatch
+  TestCaseReader.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  TestCasePlayerModule.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\testcaseplayermodule.cpp(142): warning C4018: '<': signed/unsigned mismatch
+  SteeringCommand.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  StateMachine.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  SimulationRecorderModule.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  SimulationOptions.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  SimulationMetricsCollector.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  SimulationEngine.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\simulationengine.cpp(290): warning C4389: '!=': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\simulationengine.cpp(518): warning C4018: '<=': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\simulationengine.cpp(529): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\simulationengine.cpp(1659): warning C4456: declaration of 'p' hides previous local declaration
+  c:\gitrepos\steersuite-rutgers-23\steerlib\src\simulationengine.cpp(1637): note: see declaration of 'p'
+  RecFileWriter.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\recfilewriter.cpp(120): warning C4244: '=': conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\recfilewriter.cpp(168): warning C4244: '=': conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\recfilewriter.cpp(171): warning C4244: '=': conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\recfilewriter.cpp(174): warning C4244: '=': conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\recfilewriter.cpp(238): warning C4244: '=': conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+  RecFileReader.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  RecFilePlayerModule.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\recfileplayermodule.cpp(179): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  PolygonObstacle.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\obstacles\polygonobstacle.h(56): warning C4251: 'PolygonObstacle::_points': class 'std::vector<Util::Point,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'PolygonObstacle'
+          with
+          [
+              _Ty=Util::Point
+          ]
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\geometry.h(596): note: see declaration of 'std::vector<Util::Point,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=Util::Point
+          ]
+  PerformanceProfiler.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  OrientedWallObstacle.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\obstacles\orientedwallobstacle.h(40): warning C4251: 'SteerLib::OrientedWallObstacle::_wallSections': class 'std::vector<SteerLib::OrientedBoxObstacle *,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'SteerLib::OrientedWallObstacle'
+          with
+          [
+              _Ty=SteerLib::OrientedBoxObstacle *
+          ]
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\obstacles\orientedwallobstacle.h(40): note: see declaration of 'std::vector<SteerLib::OrientedBoxObstacle *,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=SteerLib::OrientedBoxObstacle *
+          ]
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\orientedwallobstacle.cpp(41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\orientedwallobstacle.cpp(43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\orientedwallobstacle.cpp(61): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\orientedwallobstacle.cpp(63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  OrientedBoxObstacle.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  Misc.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  MemoryMapper.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  HighResCounter.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  GridDatabasePlanningDomain.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  GridDatabase2D.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\griddatabase2d.cpp(417): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\griddatabase2d.cpp(829): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\griddatabase2d.cpp(833): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  GJK_EPA.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  FrameSaver.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\framesaver.cpp(49): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\framesaver.cpp(52): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\framesaver.cpp(55): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+  DynamicLibrary.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  DrawLib.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  Curve.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(38): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(66): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(111): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(336): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(342): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\curve.cpp(348): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  CompositeTechniquePLE.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  CompositeTechniqueGraph.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  CompositeTechniqueEntropy.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(72): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(80): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(90): warning C4458: declaration of 'sx' hides class member
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\benchmarking\compositetechniqueentropy.h(105): note: see declaration of 'SteerLib::CompositeTechniqueEntropy::sx'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(167): warning C4996: 'strerror': This function or variable may be unsafe. Consider using strerror_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(178): note: see declaration of 'strerror'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(232): warning C4018: '>': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(262): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(220): warning C4996: 'strerror': This function or variable may be unsafe. Consider using strerror_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(178): note: see declaration of 'strerror'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(315): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(318): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(324): warning C4018: '>=': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(324): warning C4018: '<=': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(333): warning C4389: '==': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(389): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(431): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(434): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(437): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(438): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(493): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(500): warning C4456: declaration of 'z' hides previous local declaration
+  c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(456): note: see declaration of 'z'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(516): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(573): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(574): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(575): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(576): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(577): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(578): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(579): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(580): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(581): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(585): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(637): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(694): warning C4458: declaration of 'sumSamp' hides class member
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\benchmarking\compositetechniqueentropy.h(106): note: see declaration of 'SteerLib::CompositeTechniqueEntropy::sumSamp'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(697): warning C4018: '>': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(726): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(732): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(736): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(738): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(745): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(784): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(785): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(786): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(787): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(854): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(857): warning C4456: declaration of 'i' hides previous local declaration
+  c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(855): note: see declaration of 'i'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(860): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(863): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(998): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(999): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1000): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1003): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1050): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1070): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1071): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1082): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1114): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1115): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1126): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\compositetechniqueentropy.cpp(1208): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  CompositeTechnique02.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  CompositeTechnique01.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  CommandLineParser.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  Generating Code...
+  Compiling...
+  Clock.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  CircleObstacle.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\circleobstacle.cpp(58): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Camera.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\camera.cpp(172): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\camera.cpp(173): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  BoxObstacle.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\boxobstacle.cpp(20): warning C4305: 'argument': truncation from 'double' to 'float'
+  BenchmarkEngine.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  Behaviour.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  BehaviorParameter.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+  AgentMetricsCollector.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+  AgentInterface.cpp
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\yvals.h(112): error C2338: /RTCc rejects conformant code, so it isn't supported by the C++ Standard Library. Either remove this compiler option, or define _ALLOW_RTCc_IN_STL to acknowledge that you have received this warning.
+c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(58): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'Util::GenericException'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  c:\gitrepos\steersuite-rutgers-23\steerlib\include\util\genericexception.h(57): note: see declaration of 'Util::GenericException'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(56): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(116): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(156): warning C4018: '<': signed/unsigned mismatch
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(269): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(286): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(288): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(289): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(290): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(291): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\gitrepos\steersuite-rutgers-23\steerlib\src\agentinterface.cpp(306): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...

@@ -1,0 +1,8 @@
+﻿  ticpp.cpp
+  tinystr.cpp
+  tinyxml.cpp
+  tinyxmlerror.cpp
+  tinyxmlparser.cpp
+  Generating Code...
+  tinyxml.vcxproj -> C:\gitrepos\steersuite-rutgers-23\build\vs2012\..\bin\tinyxml.dll
+  tinyxml.vcxproj -> ..\bin\tinyxml.pdb (Full PDB)

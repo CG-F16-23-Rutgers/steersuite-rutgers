@@ -41,7 +41,7 @@ void SearchAgent::reset(const SteerLib::AgentInitialConditions & initialConditio
 {
 	// compute the "old" bounding box of the agent before it is reset.  its OK that it will be invalid if the agent was previously disabled
 	// because the value is not used in that case.
-	std::cout<<"Reset is called";
+	std::cout<<" Reset is called";
 	Util::AxisAlignedBox oldBounds(__position.x-_radius, __position.x+_radius, 0.0f, 0.0f, __position.z-_radius, __position.z+_radius);
 
 	// initialize the agent based on the initial conditions
@@ -85,12 +85,19 @@ void SearchAgent::reset(const SteerLib::AgentInitialConditions & initialConditio
 	assert(_forward.length()!=0.0f);
 	assert(_goalQueue.size() != 0);
 	assert(_radius != 0.0f);
+
+	// A#4 Pathfinding added
+	computePlan();
+	// A#4
+
 }
 
 
 void SearchAgent::computePlan()
 {
-	std::cout<<"\nComputing agent plan ";
+	std::cout<<"\n Computing agent plan " 
+		" | _goalQueue: " + _goalQueue.empty()
+		<< std::endl;
 	if (!_goalQueue.empty())
 	{
 		Util::Point global_goal = _goalQueue.front().targetLocation;
