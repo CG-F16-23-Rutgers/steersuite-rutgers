@@ -493,7 +493,13 @@ def OptimizeWithCMA():
         op.set_metric_func(steerStats.getBoundObjective(options.objectiveFunction))
         
     else:
-        op.set_metric_func(steerStats.agentFlowMetricGlobal)
+        # Here OptimizeAlgorithm.py calls the optimization function declared in SteerStats.py
+        # Probably I need to call mine function instead ????
+
+        # original call
+        # op.set_metric_func(steerStats.agentFlowMetricGlobal)
+        # modified call agentFlowMetricGlobal
+        op.set_metric_func(steerStats.agentCollisinMetricGlobal)
         print 'blah'
 	
 	if options.penaltyFunction != "overlapPenalty":

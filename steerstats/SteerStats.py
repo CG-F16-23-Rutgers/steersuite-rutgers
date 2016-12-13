@@ -6,6 +6,7 @@ import sys
 import copy
 import random
 from math import sqrt
+from math import log10
 from subprocess import call
 from multiprocessing import Pool
 from multiprocessing import Process, Queue
@@ -512,6 +513,7 @@ class SteerStats():
         #    fun_value = 0
         print "*** evaluation result for distanceGlobal: " + str(fun_value)
         return fun_value
+
     
     def timeMetricGlobal(self, ai_params, results=None, options=None):
         """
@@ -558,6 +560,7 @@ class SteerStats():
         print "*** evaluation result for timeGlobal: " + str(fun_value)
         return fun_value
     
+    # This is the default optimization function
     def agentFlowMetricGlobal(self, ai_params, results=None, options=None):
         subpars = list()
         if results == None:
@@ -600,17 +603,51 @@ class SteerStats():
             time_sum_tmp=0.0
         
             
-        # print "Agent flow time sum: " + str( agent_flow_total )
-        
+        # print "Agent flow time sum: " + str( agent_flow_total       
         # Helps penalize the system if for some reason the system crashes.
-        
         # scenario_crash_penalty = ( float(self._options.numScenarios) - num_scenarios) * 100.0 * ((float(self._options.numFrames) / fps)*u)
         fun_value = ((agent_flow_total) /float(self._options.numScenarios))
         #if fun_value < 0:
         #    fun_value = 0
         print "*** evaluation result for agent flow: " + str(fun_value * -1.0)
         return (fun_value * -1.0)
-    
+
+    # This is the customized optimization function
+    # Our function will attempt to minimize the collisions
+    # first we load into results the vars from the log files
+    def agentCollisinMetricGlobal(self, ai_params, results=None, options=None):
+        spec_collision_count = 1
+        subpars = list()
+        if results == None:
+            if self._options.subspaceParams == '':
+                for param_name,param_value in zip(self._ai_param_names,ai_params):
+                    if point_pattern.match(param_name) == None:
+                        continue
+                    subpars.append(param_value)
+                options.subspaceParams = subpars
+            results = self.RunStats(ai_params,options=options)
+
+        # them calculate specific collision per agent
+        collision_count=0.01
+        log_collision_count=0.01
+        for result in results:
+            num_agents = float(result.get_num_agents())
+            num_compl_agents = sum(result.get_agent_completes())
+            collision_count = collision_count + float(result.get_collisions())
+            log_collision_count = log_collision_count + (log10(collision_count))
+            if float(result.get_collisions()) != 0:
+                spec_collision_count =  num_compl_agents / log_collision_count
+            else:
+                spec_collision_count = 200
+        if spec_collision_count != 1:
+            print "*** DBG spec collision count: " + str(spec_collision_count * -1.0) + " | num_compl_agents: " + str(num_compl_agents) + " | collision count: " + str(collision_count) + " | log collision count: " + str(log_collision_count)   
+            
+        return (spec_collision_count * -1.0)
+
+
+    # Here is the end of the custom optimization function 
+
+
     def simulationTimeMetricGlobal(self, ai_params, results=None, options=None):
         if results == None:
             options.subspaceParams = ai_params
